@@ -4,6 +4,7 @@ module UPS
   module Builders
     class BuilderBase
       include Ox
+      include UPS::Exceptions
 
       attr_accessor :document, :root
 
@@ -20,8 +21,9 @@ module UPS
       end
 
       def element_with_value(name, value)
+        raise InvalidAttributeError.new unless value.respond_to?(:to_str)
         Element.new(name).tap do |request_action|
-          request_action << value
+          request_action << value.to_str
         end
       end
 
