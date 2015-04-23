@@ -23,10 +23,15 @@ module UPS
       self.url = (params[:test_mode]) ? TEST_URL : LIVE_URL
     end
 
-    def rates rate_builder
+    def rates(rate_builder = {}, &block)
+      if rate_builder.empty? && block_given?
+        rate_builder = UPS::Builders::RateBuilder.new
+        yield rate_builder
+      end
+
       response = Excon.post("#{self.url}#{RATE_PATH}",
                             headers: { "Content-Type" => "application/x-www-form-urlencoded" },
-                            body: URI.encode_www_form(rate_builder))
+                            body: rate_builder.to_xml)
       response_io = StringIO.new(response.body)
 
       UPS::Parsers::RatesParser.new.tap do |parser|

@@ -23,7 +23,7 @@ module UPS
       def attr(name, value)
       end
 
-      def text(value)
+      def value(value)
         self.status_code = value if switch_active? :ResponseStatusCode
         self.status_description = value if switch_active? :ResponseStatusDescription
       end
