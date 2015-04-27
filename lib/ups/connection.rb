@@ -44,7 +44,10 @@ module UPS
       parsed_confirm_response = UPS::Parsers::ShipConfirmParser.new.tap { |parser| Ox.sax_parse(parser, confirm_response) }
 
       if parsed_confirm_response.success?
-        ship_accept_builder = UPS::Builders::ShipAcceptBuilder.new parsed_confirm_response.shipment_digest
+        ship_accept_builder = UPS::Builders::ShipAcceptBuilder.new.tap do |ship_accept_builder|
+          ship_accept_builder.add_access_request shipment_builder.license_number, shipment_builder.user_id, shipment_builder.password
+          ship_accept_builder.add_shipment_digest parsed_confirm_response.shipment_digest
+        end
         accept_response = get_response_stream SHIP_ACCEPT_PATH, ship_accept_builder.to_xml
         UPS::Parsers::ShipAcceptParser.new.tap { |parser| Ox.sax_parse(parser, accept_response) }
       else

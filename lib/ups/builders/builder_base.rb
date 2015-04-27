@@ -6,7 +6,7 @@ module UPS
       include Ox
       include UPS::Exceptions
 
-      attr_accessor :document, :root, :shipment_root
+      attr_accessor :document, :root, :shipment_root, :license_number, :user_id, :password
 
       def initialize root
         self.document = Document.new
@@ -19,6 +19,10 @@ module UPS
       end
 
       def add_access_request license_number, user_id, password
+        self.license_number = license_number
+        self.user_id = user_id
+        self.password = password
+
         self.document << Element.new('AccessRequest').tap do |access_request|
           access_request << element_with_value('AccessLicenseNumber', license_number)
           access_request << element_with_value('UserId', user_id)
@@ -104,7 +108,7 @@ module UPS
       end
 
       def element_with_value(name, value)
-        raise InvalidAttributeError.new unless value.respond_to?(:to_str)
+        raise InvalidAttributeError.new(name) unless value.respond_to?(:to_str)
         Element.new(name).tap do |request_action|
           request_action << value.to_str
         end

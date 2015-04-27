@@ -5,11 +5,10 @@ module UPS
     class ShipAcceptBuilder < BuilderBase
       include Ox
 
-      def initialize digest
+      def initialize
         super 'ShipmentAcceptRequest'
 
         add_request 'ShipAccept', '1'
-        add_shipment_digest digest
       end
 
       def add_shipment_digest(digest)
