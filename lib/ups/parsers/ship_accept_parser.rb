@@ -25,7 +25,6 @@ module UPS
             file.write Base64.decode64(contents)
           ensure
             file.rewind
-            file.close
           end
         end
       end
