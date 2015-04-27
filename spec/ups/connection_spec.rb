@@ -99,6 +99,7 @@ describe UPS::Connection do
       expect(subject.success?).to eql true
       expect(subject.graphic_image).to be_a Tempfile
       expect(subject.html_image).to be_a Tempfile
+      expect(subject.tracking_number).to eql '1Z2220060292353829'
     end
   end
 end
