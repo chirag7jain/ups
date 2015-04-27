@@ -20,7 +20,7 @@ module UPS
       end
 
       def base64_to_file(contents)
-        Tempfile.new(['ups', self.graphic_extension], nil).tap do |file|
+        Tempfile.new(['ups', self.graphic_extension], nil, :encoding => 'ascii-8bit').tap do |file|
           begin
             file.write Base64.decode64(contents)
           ensure
