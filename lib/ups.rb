@@ -1,7 +1,7 @@
 module UPS
-  autoload :VERSION,              'ups/version'
   autoload :SERVICES,             'ups/services'
 
+  autoload :Version,              'ups/version'
   autoload :Connection,           'ups/connection'
   autoload :Exceptions,           'ups/exceptions'
 
