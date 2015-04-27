@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ups (0.2.0)
+    ups (0.2.1)
       excon (~> 0.45, >= 0.45.3)
       ox (~> 2.2, >= 2.2.0)
 
