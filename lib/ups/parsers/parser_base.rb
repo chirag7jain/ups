@@ -24,8 +24,8 @@ module UPS
       end
 
       def value(value)
-        self.status_code = value if switch_active? :ResponseStatusCode
-        self.status_description = value if switch_active? :ResponseStatusDescription
+        self.status_code = value.as_s if switch_active? :ResponseStatusCode
+        self.status_description = value.as_s if switch_active? :ResponseStatusDescription
       end
 
       def element_tracker_switch element, currently_in
@@ -34,6 +34,10 @@ module UPS
 
       def switch_active? element
         (self.switches[element] == true)
+      end
+
+      def success?
+        ['1', 1].include? self.status_code
       end
     end
   end

@@ -13,6 +13,21 @@ module UPS
         self.state = opts[:state]
         self.postal_code = opts[:postal_code]
         self.country = opts[:country]
+
+        validate
+      end
+
+      def validate
+        country_code = country.downcase
+        case country_code
+        when 'us'
+          # TODO: Correctly set US State to two character state code
+        when 'ie'
+          # TODO: Ensure State is set to irish county
+        else
+          self.state = ''
+        end
+
       end
 
       def to_xml
