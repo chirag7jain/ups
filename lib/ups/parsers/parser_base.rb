@@ -6,7 +6,8 @@ module UPS
     class ParserBase < ::Ox::Sax
       attr_accessor :switches,
                     :status_code,
-                    :status_description
+                    :status_description,
+                    :error_description
 
       def initialize
         self.switches = {}
@@ -26,6 +27,7 @@ module UPS
       def value(value)
         self.status_code = value.as_s if switch_active? :ResponseStatusCode
         self.status_description = value.as_s if switch_active? :ResponseStatusDescription
+        self.error_description = value.as_s if switch_active? :ErrorDescription
       end
 
       def element_tracker_switch element, currently_in

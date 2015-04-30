@@ -51,7 +51,7 @@ module UPS
         accept_response = get_response_stream SHIP_ACCEPT_PATH, ship_accept_builder.to_xml
         UPS::Parsers::ShipAcceptParser.new.tap { |parser| Ox.sax_parse(parser, accept_response) }
       else
-        false
+        parsed_confirm_response
       end
     end
 
