@@ -21,25 +21,26 @@ module UPS
         element_tracker_switch name, false
       end
 
-      def attr(name, value)
-      end
-
       def value(value)
         self.status_code = value.as_s if switch_active? :ResponseStatusCode
-        self.status_description = value.as_s if switch_active? :ResponseStatusDescription
+
+        if switch_active?(:ResponseStatusDescription)
+          self.status_description = value.as_s
+        end
+
         self.error_description = value.as_s if switch_active? :ErrorDescription
       end
 
-      def element_tracker_switch element, currently_in
-        self.switches[element] = currently_in
+      def element_tracker_switch(element, currently_in)
+        switches[element] = currently_in
       end
 
-      def switch_active? *elements
-        elements.all? { |element| self.switches[element] == true }
+      def switch_active?(*elements)
+        elements.all? { |element| switches[element] == true }
       end
 
       def success?
-        ['1', 1].include? self.status_code
+        ['1', 1].include? status_code
       end
     end
   end

@@ -12,7 +12,7 @@ module UPS
       end
 
       def add_shipment_digest(digest)
-        self.root << element_with_value('ShipmentDigest', digest)
+        root << element_with_value('ShipmentDigest', digest)
       end
     end
   end

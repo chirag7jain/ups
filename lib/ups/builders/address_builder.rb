@@ -27,16 +27,15 @@ module UPS
         else
           self.state = ''
         end
-
       end
 
       def to_xml
         Element.new('Address').tap do |address|
-          address << element_with_value('AddressLine1', self.address_line_1)
-          address << element_with_value('City', self.city)
-          address << element_with_value('StateProvinceCode', self.state)
-          address << element_with_value('PostalCode', self.postal_code)
-          address << element_with_value('CountryCode', self.country)
+          address << element_with_value('AddressLine1', address_line_1)
+          address << element_with_value('City', city)
+          address << element_with_value('StateProvinceCode', state)
+          address << element_with_value('PostalCode', postal_code)
+          address << element_with_value('CountryCode', country)
         end
       end
     end

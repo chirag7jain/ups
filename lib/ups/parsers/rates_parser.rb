@@ -15,10 +15,9 @@ module UPS
 
       def end_element(name)
         super
-        if switch_active?(:RatedShipment)
-          self.rated_shipments << @current_rate
-          @current_rate = {}
-        end
+        return unless switch_active?(:RatedShipment)
+        rated_shipments << @current_rate
+        @current_rate = {}
       end
 
       def value(value)
