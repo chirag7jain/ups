@@ -34,8 +34,8 @@ module UPS
         self.switches[element] = currently_in
       end
 
-      def switch_active? element
-        (self.switches[element] == true)
+      def switch_active? *elements
+        elements.all? { |element| self.switches[element] == true }
       end
 
       def success?

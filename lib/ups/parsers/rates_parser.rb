@@ -14,23 +14,29 @@ module UPS
       end
 
       def end_element(name)
-        if name == :RatedShipment
+        super
+        if switch_active?(:RatedShipment)
           self.rated_shipments << @current_rate
           @current_rate = {}
         end
-        super
       end
 
       def value(value)
         super
-        if switch_active?(:RatedShipment)
-          if switch_active?(:Service) && switch_active?(:Code)
-            @current_rate[:service_code] = value.as_s
-            @current_rate[:service_name] = UPS::SERVICES[value.as_s]
-          elsif switch_active?(:TotalCharges)
-            @current_rate[:total] = value.as_s
-          end
+        if switch_active?(:RatedShipment, :Service, :Code)
+          parse_service_code value
+        elsif switch_active?(:RatedShipment, :TotalCharges)
+          parse_total_charges value
         end
+      end
+
+      def parse_service_code(value)
+        @current_rate[:service_code] = value.as_s
+        @current_rate[:service_name] = UPS::SERVICES[value.as_s]
+      end
+
+      def parse_total_charges(value)
+        @current_rate[:total] = value.as_s
       end
     end
   end
