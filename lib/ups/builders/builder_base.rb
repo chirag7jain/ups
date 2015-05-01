@@ -95,10 +95,7 @@ module UPS
       private
 
       def packaging_type
-        Element.new('PackagingType').tap do |org|
-          org << element_with_value('Code', '02')
-          org << element_with_value('Description', 'Customer Supplied')
-        end
+        code_description 'PackagingType', '02', 'Customer Supplied'
       end
 
       def package_weight(weight, unit)
@@ -118,6 +115,13 @@ module UPS
         fail InvalidAttributeError, name unless value.respond_to?(:to_str)
         Element.new(name).tap do |request_action|
           request_action << value.to_str
+        end
+      end
+
+      def code_description(name, code, description)
+        Element.new(name).tap do |label_print_method|
+          label_print_method << element_with_value('Code', code)
+          label_print_method << element_with_value('Description', description)
         end
       end
     end

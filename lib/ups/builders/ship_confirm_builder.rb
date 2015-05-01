@@ -23,10 +23,7 @@ module UPS
       end
 
       def add_service(service_code, service_description = '')
-        shipment_root << Element.new('Service').tap do |service|
-          service << element_with_value('Code', service_code)
-          service << element_with_value('Description', service_description)
-        end
+        shipment_root << code_description('Service', service_code, service_description)
       end
 
       private
@@ -36,17 +33,11 @@ module UPS
       end
 
       def label_print_method
-        Element.new('LabelPrintMethod').tap do |label_print_method|
-          label_print_method << element_with_value('Code', 'GIF')
-          label_print_method << element_with_value('Description', 'gif file')
-        end
+        code_description 'LabelPrintMethod', 'GIF', 'gif file'
       end
 
       def label_image_format
-        Element.new('LabelImageFormat').tap do |label_image_format|
-          label_image_format << element_with_value('Code', 'GIF')
-          label_image_format << element_with_value('Description', 'gif')
-        end
+        code_description 'LabelImageFormat', 'GIF', 'gif'
       end
     end
   end
