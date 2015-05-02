@@ -23,7 +23,9 @@ module UPS
       end
 
       def add_service(service_code, service_description = '')
-        shipment_root << code_description('Service', service_code, service_description)
+        shipment_root << code_description('Service',
+                                          service_code,
+                                          service_description)
       end
 
       private
