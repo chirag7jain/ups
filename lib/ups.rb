@@ -19,5 +19,6 @@ module UPS
     autoload :ShipConfirmBuilder, 'ups/builders/ship_confirm_builder'
     autoload :ShipAcceptBuilder,  'ups/builders/ship_accept_builder'
     autoload :OrganisationBuilder,'ups/builders/organisation_builder'
+    autoload :ShipperBuilder,     'ups/builders/shipper_builder'
   end
 end

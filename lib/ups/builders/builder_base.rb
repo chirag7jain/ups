@@ -43,14 +43,7 @@ module UPS
       end
 
       def add_shipper(opts = {})
-        shipment_root << Element.new('Shipper').tap do |org|
-          org << element_with_value('Name', opts[:company_name])
-          org << element_with_value('PhoneNumber', opts[:phone_number])
-          unless opts[:shipper_number].nil?
-            org << element_with_value('ShipperNumber', opts[:shipper_number])
-          end
-          org << AddressBuilder.new(opts).to_xml
-        end
+        shipment_root << ShipperBuilder.new(opts).to_xml
       end
 
       def add_ship_to(opts = {})
