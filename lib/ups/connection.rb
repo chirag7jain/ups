@@ -36,30 +36,15 @@ module UPS
       end
     end
 
-    def ship(confirm_builder = {})
-      if confirm_builder.empty? && block_given?
-        confirm_builder = UPS::Builders::ShipConfirmBuilder.new
-        yield confirm_builder
-      end
+    def ship
+      confirm_builder = Builders::ShipConfirmBuilder.new
+      yield confirm_builder if block_given?
 
-      confirm_response_stream = get_response_stream SHIP_CONFIRM_PATH,
-                                                    confirm_builder.to_xml
-      confirm_response = UPS::Parsers::ShipConfirmParser.new.tap do |parser|
-        Ox.sax_parse(parser, confirm_response_stream)
-      end
-
+      confirm_response = make_confirm_request(confirm_builder)
       if confirm_response.success?
-        accept_builder = UPS::Builders::ShipAcceptBuilder.new.tap do |builder|
-          builder.add_access_request confirm_builder.license_number,
-                                     confirm_builder.user_id,
-                                     confirm_builder.password
-          builder.add_shipment_digest confirm_response.shipment_digest
-        end
-        accept_response = get_response_stream SHIP_ACCEPT_PATH,
-                                              accept_builder.to_xml
-        UPS::Parsers::ShipAcceptParser.new.tap do |parser|
-          Ox.sax_parse(parser, accept_response)
-        end
+        accept_builder = build_accept_request_from_confirm(confirm_builder,
+                                                           confirm_response)
+        make_accept_request accept_builder
       else
         confirm_response
       end
@@ -74,6 +59,31 @@ module UPS
     def get_response_stream(path, body)
       response = Excon.post(build_url(path), body: body)
       StringIO.new(response.body)
+    end
+
+    def make_confirm_request(confirm_builder)
+      confirm_response_stream = get_response_stream SHIP_CONFIRM_PATH,
+                                                    confirm_builder.to_xml
+      UPS::Parsers::ShipConfirmParser.new.tap do |parser|
+        Ox.sax_parse(parser, confirm_response_stream)
+      end
+    end
+
+    def make_accept_request(accept_builder)
+      accept_response = get_response_stream SHIP_ACCEPT_PATH,
+                                            accept_builder.to_xml
+      UPS::Parsers::ShipAcceptParser.new.tap do |parser|
+        Ox.sax_parse(parser, accept_response)
+      end
+    end
+
+    def build_accept_request_from_confirm(confirm_builder, confirm_response)
+      UPS::Builders::ShipAcceptBuilder.new.tap do |builder|
+        builder.add_access_request confirm_builder.license_number,
+                                   confirm_builder.user_id,
+                                   confirm_builder.password
+        builder.add_shipment_digest confirm_response.shipment_digest
+      end
     end
   end
 end
