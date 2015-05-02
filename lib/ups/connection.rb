@@ -62,18 +62,21 @@ module UPS
     end
 
     def make_confirm_request(confirm_builder)
-      confirm_response_stream = get_response_stream SHIP_CONFIRM_PATH,
-                                                    confirm_builder.to_xml
-      UPS::Parsers::ShipConfirmParser.new.tap do |parser|
-        Ox.sax_parse(parser, confirm_response_stream)
-      end
+      make_ship_request confirm_builder,
+                        SHIP_CONFIRM_PATH,
+                        Parsers::ShipConfirmParser.new
     end
 
     def make_accept_request(accept_builder)
-      accept_response = get_response_stream SHIP_ACCEPT_PATH,
-                                            accept_builder.to_xml
-      UPS::Parsers::ShipAcceptParser.new.tap do |parser|
-        Ox.sax_parse(parser, accept_response)
+      make_ship_request accept_builder,
+                        SHIP_ACCEPT_PATH,
+                        Parsers::ShipAcceptParser.new
+    end
+
+    def make_ship_request(builder, path, ship_parser)
+      response = get_response_stream path, builder.to_xml
+      ship_parser.tap do |parser|
+        Ox.sax_parse(parser, response)
       end
     end
 
