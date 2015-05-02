@@ -18,5 +18,6 @@ module UPS
     autoload :AddressBuilder,     'ups/builders/address_builder'
     autoload :ShipConfirmBuilder, 'ups/builders/ship_confirm_builder'
     autoload :ShipAcceptBuilder,  'ups/builders/ship_accept_builder'
+    autoload :OrganisationBuilder,'ups/builders/organisation_builder'
   end
 end

@@ -54,20 +54,11 @@ module UPS
       end
 
       def add_ship_to(opts = {})
-        add_organisation('ShipTo', opts)
+        shipment_root << OrganisationBuilder.new('ShipTo', opts).to_xml
       end
 
       def add_ship_from(opts = {})
-        add_organisation('ShipFrom', opts)
-      end
-
-      def add_organisation(name, opts = {})
-        shipment_root << Element.new(name).tap do |org|
-          org << element_with_value('CompanyName', opts[:company_name])
-          org << element_with_value('PhoneNumber', opts[:phone_number])
-          org << element_with_value('AttentionName', opts[:company_name])
-          org << AddressBuilder.new(opts).to_xml
-        end
+        shipment_root << OrganisationBuilder.new('ShipFrom', opts).to_xml
       end
 
       def add_package(opts = {})
