@@ -76,6 +76,12 @@ describe UPS::Connection do
     it "should return rates" do
       expect { subject }.not_to raise_error
       expect(subject.rated_shipments).not_to be_empty
+      expect(subject.rated_shipments).to eql [
+        {:service_code=>"11", :service_name=>"UPS Standard", :total=>"25.03"},
+        {:service_code=>"65", :service_name=>"UPS Saver", :total=>"45.82"},
+        {:service_code=>"54", :service_name=>"Express Plus", :total=>"82.08"},
+        {:service_code=>"07", :service_name=>"Express", :total=>"47.77"}
+      ]
     end
   end
 
