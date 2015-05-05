@@ -1,5 +1,5 @@
-require 'coveralls'
-Coveralls.wear!
+require "codeclimate-test-reporter"
+CodeClimate::TestReporter.start
 
 path = File.expand_path("../../", __FILE__)
 require "#{path}/lib/ups.rb"
