@@ -3,6 +3,7 @@ PATH
   specs:
     ups (0.4.0)
       excon (~> 0.45, >= 0.45.3)
+      insensitive_hash (~> 0.3.3)
       ox (~> 2.2, >= 2.2.0)
 
 GEM
@@ -21,6 +22,7 @@ GEM
     excon (0.45.3)
     http-cookie (1.0.2)
       domain_name (~> 0.5)
+    insensitive_hash (0.3.3)
     json (1.8.2)
     mime-types (2.5)
     netrc (0.10.3)

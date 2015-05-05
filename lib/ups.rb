@@ -1,5 +1,6 @@
 module UPS
   autoload :SERVICES,              'ups/services'
+  autoload :US_STATES,             'ups/us_states'
 
   autoload :Version,               'ups/version'
   autoload :Connection,            'ups/connection'

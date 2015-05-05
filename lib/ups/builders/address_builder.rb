@@ -16,12 +16,21 @@ module UPS
         country_code = opts[:country].downcase
         case country_code
         when 'us'
-          # TODO: Correctly set US State to two character state code
+          validate_us_address
         when 'ie'
           # TODO: Ensure State is set to irish county
         else
           opts[:state] = ''
         end
+      end
+
+      def validate_us_address
+        state = opts[:state]
+        opts[:state] = if state.to_str.length > 2
+                         UPS::US_STATES[state] || state
+                       else
+                         state.upcase
+                       end
       end
 
       def address_line_1

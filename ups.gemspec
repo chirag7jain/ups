@@ -16,6 +16,7 @@ Gem::Specification.new do |gem|
 
   gem.add_runtime_dependency 'ox', '~> 2.2', '>= 2.2.0'
   gem.add_runtime_dependency 'excon', '~> 0.45', '>= 0.45.3'
+  gem.add_runtime_dependency 'insensitive_hash', '~> 0.3.3'
 
   gem.files        = `git ls-files`.split($OUTPUT_RECORD_SEPARATOR)
   gem.require_path = 'lib'
