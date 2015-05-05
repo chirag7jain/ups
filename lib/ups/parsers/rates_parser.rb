@@ -15,7 +15,7 @@ module UPS
 
       def end_element(name)
         super
-        return unless switch_active?(:RatedShipment)
+        return unless name == :RatedShipment
         rated_shipments << @current_rate
         @current_rate = {}
       end
