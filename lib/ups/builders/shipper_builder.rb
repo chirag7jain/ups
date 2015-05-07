@@ -12,6 +12,10 @@ module UPS
         self.opts = opts
       end
 
+      def shipper_name
+        element_with_value('Name', opts[:company_name])
+      end
+
       def company_name
         element_with_value('CompanyName', opts[:company_name])
       end
@@ -30,6 +34,7 @@ module UPS
 
       def to_xml
         Element.new('Shipper').tap do |org|
+          org << shipper_name
           org << company_name
           org << phone_number
           org << shipper_number unless shipper_number.nil?
