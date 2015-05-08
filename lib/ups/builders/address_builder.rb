@@ -18,7 +18,7 @@ module UPS
         when 'us'
           validate_us_address
         when 'ie'
-          # TODO: Ensure State is set to irish county
+          opts[:state] = UPS::Data::ie_state_matcher(opts[:state])
         else
           opts[:state] = ''
         end

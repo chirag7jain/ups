@@ -5,8 +5,11 @@ module UPS
   autoload :Connection,            'ups/connection'
   autoload :Exceptions,            'ups/exceptions'
 
+  autoload :Data,                  'ups/data'
   module Data
     autoload :US_STATES,           'ups/data/us_states'
+    autoload :IE_COUNTIES,         'ups/data/ie_counties'
+    autoload :IE_COUNTY_PREFIXES,  'ups/data/ie_county_prefixes'
   end
 
   module Parsers
