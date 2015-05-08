@@ -1,6 +1,8 @@
 source 'http://rubygems.org'
 gemspec
 
-gem "codeclimate-test-reporter", group: :test, require: nil
-gem 'rake'
-gem 'rspec'
+group :development, :test do
+  gem 'codeclimate-test-reporter', require: nil
+  gem 'rake'
+  gem 'rspec'
+end
