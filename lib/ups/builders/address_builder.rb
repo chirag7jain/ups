@@ -27,7 +27,7 @@ module UPS
       def validate_us_address
         state = opts[:state]
         opts[:state] = if state.to_str.length > 2
-                         UPS::US_STATES[state] || state
+                         UPS::Data::US_STATES[state] || state
                        else
                          state.upcase
                        end

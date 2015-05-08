@@ -1,10 +1,13 @@
 module UPS
   autoload :SERVICES,              'ups/services'
-  autoload :US_STATES,             'ups/us_states'
 
   autoload :Version,               'ups/version'
   autoload :Connection,            'ups/connection'
   autoload :Exceptions,            'ups/exceptions'
+
+  module Data
+    autoload :US_STATES,           'ups/data/us_states'
+  end
 
   module Parsers
     autoload :ParserBase,          'ups/parsers/parser_base'
