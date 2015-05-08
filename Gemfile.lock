@@ -4,6 +4,7 @@ PATH
     ups (0.5.2)
       excon (~> 0.45, >= 0.45.3)
       insensitive_hash (~> 0.3.3)
+      levenshtein-ffi (~> 1.1.0)
       ox (~> 2.2, >= 2.2.0)
 
 GEM
@@ -14,8 +15,11 @@ GEM
     diff-lcs (1.2.5)
     docile (1.1.5)
     excon (0.45.3)
+    ffi (1.9.8)
     insensitive_hash (0.3.3)
     json (1.8.2)
+    levenshtein-ffi (1.1.0)
+      ffi (~> 1.9)
     ox (2.2.0)
     rake (10.4.2)
     rspec (3.2.0)
