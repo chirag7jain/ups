@@ -16,7 +16,8 @@ module UPS
         counties_with_distances = IE_COUNTIES.map do |county|
           [county, Levenshtein.distance(county.downcase, normalized_string)]
         end
-        counties_with_distances.to_h.min_by { |_k, v| v }[0]
+        counties_with_distances_hash = Hash[*counties_with_distances.flatten]
+        counties_with_distances_hash.min_by { |_k, v| v }[0]
       end
 
       def string_normalizer(string)
