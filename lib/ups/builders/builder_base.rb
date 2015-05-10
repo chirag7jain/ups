@@ -9,17 +9,16 @@ module UPS
       attr_accessor :document,
                     :root,
                     :shipment_root,
+                    :access_request,
                     :license_number,
                     :user_id,
                     :password
 
-      def initialize(root)
-        self.document = Document.new
-        self.root = Element.new(root)
-        self.shipment_root = Element.new('Shipment')
+      def initialize(root_name)
+        initialize_xml_roots root_name
 
-        self.root << shipment_root
-        document << self.root
+        document << access_request
+        document << root
       end
 
       def add_access_request(license_number, user_id, password)
@@ -27,12 +26,10 @@ module UPS
         self.user_id = user_id
         self.password = password
 
-        document << Element.new('AccessRequest').tap do |access_request|
-          access_request << element_with_value('AccessLicenseNumber',
-                                               license_number)
-          access_request << element_with_value('UserId', user_id)
-          access_request << element_with_value('Password', password)
-        end
+        access_request << element_with_value('AccessLicenseNumber',
+                                             license_number)
+        access_request << element_with_value('UserId', user_id)
+        access_request << element_with_value('Password', password)
       end
 
       def add_request(action, option)
@@ -77,6 +74,14 @@ module UPS
       end
 
       private
+
+      def initialize_xml_roots(root_name)
+        self.document = Document.new
+        self.root = Element.new(root_name)
+        self.shipment_root = Element.new('Shipment')
+        self.access_request = Element.new('AccessRequest')
+        root << shipment_root
+      end
 
       def packaging_type
         code_description 'PackagingType', '02', 'Customer Supplied'
