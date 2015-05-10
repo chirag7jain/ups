@@ -18,7 +18,7 @@ module UPS
         when 'us'
           validate_us_address
         when 'ie'
-          opts[:state] = UPS::Data::ie_state_matcher(opts[:state])
+          opts[:state] = UPS::Data.ie_state_matcher(opts[:state])
         else
           opts[:state] = ''
         end
