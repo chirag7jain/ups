@@ -19,6 +19,10 @@ This gem is currently used in production at [Veeqo](http://www.veeqo.com)
 
 ...or add it to your project's [Gemfile](http://bundler.io/).
 
+## Documentation
+
+Yard documentation can be found at [RubyDoc](http://www.rubydoc.info/github/ptrippett/ups).
+
 ## Sample Usage
 
 ### Return rates
