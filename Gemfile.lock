@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ups (0.6.1)
+    ups (0.6.2)
       excon (~> 0.45, >= 0.45.3)
       insensitive_hash (~> 0.3.3)
       levenshtein-ffi (~> 1.1)
