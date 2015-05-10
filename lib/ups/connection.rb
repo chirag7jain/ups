@@ -36,9 +36,11 @@ module UPS
       end
     end
 
-    def ship
-      confirm_builder = Builders::ShipConfirmBuilder.new
-      yield confirm_builder if block_given?
+    def ship(confirm_builder = nil)
+      if confirm_builder.nil? && block_given?
+        confirm_builder = Builders::ShipConfirmBuilder.new
+        yield confirm_builder
+      end
 
       confirm_response = make_confirm_request(confirm_builder)
       if confirm_response.success?
