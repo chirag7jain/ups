@@ -98,7 +98,7 @@ describe UPS::Connection do
     end
   end
 
-  context "ups returns an error diring ship confirm" do
+  context "ups returns an error during ship confirm" do
     before do
       Excon.stub({:method => :post}) do |params|
         case params[:path]
