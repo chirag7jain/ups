@@ -24,8 +24,8 @@ module UPS
       self.url = (params[:test_mode]) ? TEST_URL : LIVE_URL
     end
 
-    def rates(rate_builder = {})
-      if rate_builder.empty? && block_given?
+    def rates(rate_builder = nil)
+      if rate_builder.nil? && block_given?
         rate_builder = UPS::Builders::RateBuilder.new
         yield rate_builder
       end
