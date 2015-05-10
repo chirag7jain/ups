@@ -4,6 +4,13 @@ require 'digest/md5'
 require 'ox'
 
 module UPS
+  # The {Connection} class acts as the main entry point to performing rate and
+  # ship operations against the UPS API.
+  #
+  # @author Paul Trippett
+  # @abstract
+  # @since 0.1.0
+  # @attr [String] url The base url to use either TEST_URL or LIVE_URL
   class Connection
     attr_accessor :url
 
@@ -19,11 +26,26 @@ module UPS
       test_mode: false
     }
 
+    # Initializes a new {Connection} object
+    #
+    # @param [Hash] params The initialization options
+    # @option params [Boolean] :test_mode If TEST_URL should be used for
+    #   requests to the UPS URL
     def initialize(params = {})
       params = DEFAULT_PARAMS.merge(params)
       self.url = (params[:test_mode]) ? TEST_URL : LIVE_URL
     end
 
+    # Makes a request to fetch Rates for a shipment.
+    #
+    # A pre-configured {Builders::RateBuilder} object can be passed as the first
+    # option or a block yielded to configure a new {Builders::RateBuilder}
+    # object.
+    #
+    # @param [Builders::RateBuilder] rate_builder A pre-configured
+    #   {Builders::RateBuilder} object to use
+    # @yield [rate_builder] A RateBuilder object for configuring
+    #   the shipment information sent
     def rates(rate_builder = nil)
       if rate_builder.nil? && block_given?
         rate_builder = UPS::Builders::RateBuilder.new
@@ -36,6 +58,16 @@ module UPS
       end
     end
 
+    # Makes a request to ship a package
+    #
+    # A pre-configured {Builders::ShipConfirmBuilder} object can be passed as
+    # the first option or a block yielded to configure a new
+    # {Builders::ShipConfirmBuilder} object.
+    #
+    # @param [Builders::ShipConfirmBuilder] confirm_builder A pre-configured
+    #   {Builders::ShipConfirmBuilder} object to use
+    # @yield [ship_confirm_builder] A ShipConfirmBuilder object for configuring
+    #   the shipment information sent
     def ship(confirm_builder = nil)
       if confirm_builder.nil? && block_given?
         confirm_builder = Builders::ShipConfirmBuilder.new
