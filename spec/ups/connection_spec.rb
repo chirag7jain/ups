@@ -1,6 +1,6 @@
-require "spec_helper"
-
+require 'spec_helper'
 require 'tempfile'
+require 'support/shipping_options'
 
 describe UPS::Connection do
   before do
@@ -11,31 +11,10 @@ describe UPS::Connection do
     Excon.stubs.clear
   end
 
+  include_context 'Shipping Options'
+
   let(:stub_path) { File.expand_path("../../stubs", __FILE__) }
   let(:server) { UPS::Connection.new(test_mode: true) }
-  let(:shipper) { {
-    company_name: 'Veeqo Limited',
-    phone_number: '01792 123456',
-    address_line_1: '11 Wind Street',
-    city: 'Swansea',
-    state: 'Wales',
-    postal_code: 'SA1 1DA',
-    country: 'GB',
-    shipper_number: ENV['UPS_ACCOUNT_NUMBER']
-  } }
-  let(:ship_to) { {
-    company_name: 'Google Inc.',
-    phone_number: '0207 031 3000',
-    address_line_1: '1 St Giles High Street',
-    city: 'London',
-    state: 'England',
-    postal_code: 'WC2H 8AG',
-    country: 'GB'
-  } }
-  let(:package) { {
-    weight: '0.5',
-    unit: 'KGS'
-  } }
 
   context "when setting test mode" do
     subject { UPS::Connection.new(test_mode: true) }
@@ -149,7 +128,7 @@ describe UPS::Connection do
     end
   end
 
-  context "ups returns an error diring ship accept" do
+  context "ups returns an error during ship accept" do
     before do
       Excon.stub({:method => :post}) do |params|
         case params[:path]
