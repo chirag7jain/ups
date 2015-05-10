@@ -2,11 +2,17 @@ require 'ox'
 
 module UPS
   module Builders
+    # The {ShipConfirmBuilder} class builds UPS XML ShipConfirm Objects.
+    #
+    # @author Paul Trippett
+    # @since 0.1.0
+    # @attr [String] name The Containing XML Element Name
+    # @attr [Hash] opts The Organization and Address Parts
     class ShipConfirmBuilder < BuilderBase
       include Ox
 
-      attr_accessor :root, :shipment_root
-
+      # Initializes a new {ShipConfirmBuilder} object
+      #
       def initialize
         super 'ShipmentConfirmRequest'
 
@@ -14,6 +20,9 @@ module UPS
         add_label_specification
       end
 
+      # Adds a LabelSpecification section to the XML document being built
+      #
+      # @return [void]
       def add_label_specification
         root << Element.new('LabelSpecification').tap do |label_spec|
           label_spec << label_print_method
@@ -22,6 +31,13 @@ module UPS
         end
       end
 
+      # Adds a Service section to the XML document being built
+      #
+      # @param [String] service_code The Service code for the choosen Shipping
+      #   method
+      # @param [optional, String] service_description A description for the
+      #   choosen Shipping Method
+      # @return [void]
       def add_service(service_code, service_description = '')
         shipment_root << code_description('Service',
                                           service_code,
