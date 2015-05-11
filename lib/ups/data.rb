@@ -3,6 +3,8 @@ require 'levenshtein'
 module UPS
   module Data
     class << self
+      EMPTY_STATE_MESSAGE = 'Invalid Address State [:state]'
+
       # Normalizes Irish states as per UPS requirements
       #
       # @param [String] string The Irish State to normalize
@@ -22,6 +24,9 @@ module UPS
       # @return [String] The clostest matching irish state with the specified
       #   name
       def ie_state_matcher(match_string)
+        fail Exceptions::InvalidAttributeError, EMPTY_STATE_MESSAGE if
+          match_string.nil? || match_string.empty?
+
         normalized_string = ie_state_normalizer string_normalizer match_string
         counties_with_distances = IE_COUNTIES.map do |county|
           [county, Levenshtein.distance(county.downcase, normalized_string)]

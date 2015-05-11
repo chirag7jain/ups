@@ -44,14 +44,19 @@ describe UPS::Builders::AddressBuilder do
       country: 'IE',
     } }
 
-    subject { UPS::Builders::AddressBuilder.new address_hash }
-
     context "normalizes the state field" do
+      subject { UPS::Builders::AddressBuilder.new address_hash }
 
       it "should change the state to be the abbreviated state name" do
         expect(subject.opts[:state]).to eql 'Dublin'
       end
     end
 
+    context "when passed a empty state" do
+      subject { UPS::Builders::AddressBuilder.new address_hash.merge({ state: '' }) }
+      it "should throw an exception" do
+        expect { subject }.to raise_error(UPS::Exceptions::InvalidAttributeError)
+      end
+    end
   end
 end
