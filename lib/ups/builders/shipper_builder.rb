@@ -53,7 +53,7 @@ module UPS
       #
       # @return [Ox::Element] XML representation of shipper_number
       def shipper_number
-        element_with_value('ShipperNumber', opts[:shipper_number])
+        element_with_value('ShipperNumber', opts[:shipper_number] || '')
       end
 
       # Returns an XML representation of the associated Address
@@ -71,7 +71,7 @@ module UPS
           org << shipper_name
           org << company_name
           org << phone_number
-          org << shipper_number unless shipper_number.nil?
+          org << shipper_number
           org << address
         end
       end

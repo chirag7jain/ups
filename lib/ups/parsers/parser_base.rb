@@ -22,13 +22,14 @@ module UPS
       end
 
       def value(value)
-        self.status_code = value.as_s if switch_active? :ResponseStatusCode
+        string_value = value.as_s
+        self.status_code = string_value if switch_active? :ResponseStatusCode
 
         if switch_active?(:ResponseStatusDescription)
-          self.status_description = value.as_s
+          self.status_description = string_value
         end
 
-        self.error_description = value.as_s if switch_active? :ErrorDescription
+        self.error_description = string_value if switch_active? :ErrorDescription
       end
 
       def element_tracker_switch(element, currently_in)
