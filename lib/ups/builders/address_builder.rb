@@ -20,13 +20,17 @@ module UPS
       # @option opts [String] :state State
       # @option opts [String] :postal_code Zip or Postal Code
       # @option opts [String] :country Country
+      # @raise [InvalidAttributeError] If the passed :state is nil or an
+      #   empty string and the :country is IE
       def initialize(opts = {})
         self.opts = opts
         validate
       end
 
-      # Changes state part of the address based on UPS requirements
+      # Changes :state part of the address based on UPS requirements
       #
+      # @raise [InvalidAttributeError] If the passed :state is nil or an
+      #   empty string and the :country is IE
       # @return [void]
       def validate
         country_code = opts[:country].downcase
@@ -40,7 +44,7 @@ module UPS
         end
       end
 
-      # Changes opts[:state] based on UPS requirements for US Addresses
+      # Changes :state based on UPS requirements for US Addresses
       #
       # @return [void]
       def validate_us_address

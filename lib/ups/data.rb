@@ -21,7 +21,9 @@ module UPS
       # distance to correct any possible spelling errors.
       #
       # @param [String] match_string The Irish State to match
-      # @return [String] The clostest matching irish state with the specified
+      # @raise [InvalidAttributeError] If the passed match_String is nil or
+      #   empty
+      # @return [String] The closest matching irish state with the specified
       #   name
       def ie_state_matcher(match_string)
         fail Exceptions::InvalidAttributeError, EMPTY_STATE_MESSAGE if
