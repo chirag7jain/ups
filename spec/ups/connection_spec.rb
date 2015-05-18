@@ -49,6 +49,7 @@ describe UPS::Connection do
         rate_builder.add_ship_from shipper
         rate_builder.add_ship_to ship_to
         rate_builder.add_package package
+        rate_builder.add_rate_information
       end
     end
 
