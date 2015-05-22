@@ -60,14 +60,14 @@ module UPS
       #
       # @return [Ox::Element] XML representation of address_line_1 address part
       def address_line_1
-        element_with_value('AddressLine1', opts[:address_line_1])
+        element_with_value('AddressLine1', opts[:address_line_1][0..35])
       end
 
       # Returns an XML representation of city
       #
       # @return [Ox::Element] XML representation of the city address part
       def city
-        element_with_value('City', opts[:city])
+        element_with_value('City', opts[:city][0..30])
       end
 
       # Returns an XML representation of state
@@ -81,14 +81,14 @@ module UPS
       #
       # @return [Ox::Element] XML representation of the postal_code address part
       def postal_code
-        element_with_value('PostalCode', opts[:postal_code])
+        element_with_value('PostalCode', opts[:postal_code][0..10])
       end
 
       # Returns an XML representation of country
       #
       # @return [Ox::Element] XML representation of the country address part
       def country
-        element_with_value('CountryCode', opts[:country])
+        element_with_value('CountryCode', opts[:country][0..2])
       end
 
       # Returns an XML representation of a UPS Address

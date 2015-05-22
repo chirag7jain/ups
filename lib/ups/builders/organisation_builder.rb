@@ -32,14 +32,14 @@ module UPS
       #
       # @return [Ox::Element] XML representation of company_name
       def company_name
-        element_with_value('CompanyName', opts[:company_name])
+        element_with_value('CompanyName', opts[:company_name][0..35])
       end
 
       # Returns an XML representation of phone_number
       #
       # @return [Ox::Element] XML representation of phone_number
       def phone_number
-        element_with_value('PhoneNumber', opts[:phone_number])
+        element_with_value('PhoneNumber', opts[:phone_number][0..15])
       end
 
       # Returns an XML representation of AttentionName for which we use company
@@ -47,7 +47,7 @@ module UPS
       #
       # @return [Ox::Element] XML representation of company_name part
       def attention_name
-        element_with_value('AttentionName', opts[:company_name])
+        element_with_value('AttentionName', opts[:company_name][0..35])
       end
 
       # Returns an XML representation of address
