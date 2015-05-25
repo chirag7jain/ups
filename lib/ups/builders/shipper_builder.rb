@@ -63,12 +63,20 @@ module UPS
         AddressBuilder.new(opts).to_xml
       end
 
+      # Returns an XML representation of attention_name
+      #
+      # @return [Ox::Element] XML representation of attention_name
+      def attention_name
+        element_with_value('AttentionName', opts[:attention_name] || '')
+      end
+
       # Returns an XML representation of the current object
       #
       # @return [Ox::Element] XML representation of the current object
       def to_xml
         Element.new('Shipper').tap do |org|
           org << shipper_name
+          org << attention_name
           org << company_name
           org << phone_number
           org << shipper_number
