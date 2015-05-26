@@ -32,11 +32,10 @@ describe UPS::Connection do
         rate_builder.add_ship_from shipper
         rate_builder.add_ship_to ship_to
         rate_builder.add_package package
-        rate_builder.add_rate_information
       end
     end
 
-    it "should return rates" do
+    it "should return standard rates" do
       expect { subject }.not_to raise_error
       expect(subject.rated_shipments).not_to be_empty
       expect(subject.rated_shipments).to eql [
