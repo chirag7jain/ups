@@ -139,6 +139,10 @@ module UPS
         end
       end
 
+      # Adds a RateInformation/NegotiatedRatesIndicator section to the XML
+      # document being built
+      #
+      # @return [void]
       def add_rate_information
         shipment_root << Element.new('RateInformation').tap do |rate_info|
           rate_info << element_with_value('NegotiatedRatesIndicator', '1')
