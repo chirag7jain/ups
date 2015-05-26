@@ -17,7 +17,7 @@ module UPS
         super 'ShipmentConfirmRequest'
 
         add_request 'ShipConfirm', 'validate'
-        add_label_specification if !opts[:label].nil?
+        add_label_specification if opts[:label].nil? || opts[:label] == true
       end
 
       # Adds a LabelSpecification section to the XML document being built
