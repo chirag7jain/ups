@@ -47,7 +47,7 @@ module UPS
       #
       # @return [Ox::Element] XML representation of company_name part
       def attention_name
-        element_with_value('AttentionName', opts[:company_name][0..35])
+        element_with_value('AttentionName', opts[:attention_name][0..35])
       end
 
       # Returns an XML representation of address

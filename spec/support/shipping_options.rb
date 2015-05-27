@@ -1,6 +1,7 @@
 RSpec.shared_context 'Shipping Options', :a => :b do
   let(:shipper) { {
     company_name: 'Veeqo Limited',
+    attention_name: 'Walter White',
     phone_number: '01792 123456',
     address_line_1: '11 Wind Street',
     city: 'Swansea',
@@ -11,6 +12,7 @@ RSpec.shared_context 'Shipping Options', :a => :b do
   } }
   let(:ship_to) { {
     company_name: 'Google Inc.',
+    attention_name: 'Sergie Bryn',
     phone_number: '0207 031 3000',
     address_line_1: '1 St Giles High Street',
     city: 'London',
