@@ -17,28 +17,20 @@ module UPS
         super 'ShipmentConfirmRequest'
 
         add_request 'ShipConfirm', 'validate'
-        add_label_specification if opts[:label].nil? || opts[:label] == true
-      end
-
-      # Adds a LabelSpecification section to the XML document being built
-      #
-      # @return [void]
-      def add_label_specification
-        root << Element.new('LabelSpecification').tap do |label_spec|
-          label_spec << label_print_method
-          label_spec << element_with_value('HTTPUserAgent', version_string)
-          label_spec << label_image_format
-        end
       end
 
       # Adds a LabelSpecification section to the XML document being built
       # according to user inputs
       #
       # @return [void]
-      def add_custom_label_specification(spec)
+      def add_label_specification(format, size)
         root << Element.new('LabelSpecification').tap do |label_spec|
-          label_spec << label_print_method(spec[:format])
-          label_spec << label_stock_size(spec[:size])
+          label_spec << label_print_method(format)
+          label_spec << label_image_format(format)
+          label_spec << label_stock_size(size)
+
+          # Required only when Format is GIF
+          label_spec << element_with_value('HTTPUserAgent', version_string) if format.downcase == 'gif'
         end
       end
 
@@ -61,7 +53,7 @@ module UPS
       #
       # @return [void]
       def add_description(description)
-        shipment_root << element_with_value('Description', description || '')
+        shipment_root << element_with_value('Description', description)
       end
 
       private
@@ -70,12 +62,12 @@ module UPS
         "RubyUPS/#{UPS::Version::STRING}"
       end
 
-      def label_print_method(format='GIF')
+      def label_print_method(format)
         code_description 'LabelPrintMethod', "#{format}", "#{format} file"
       end
 
-      def label_image_format
-        code_description 'LabelImageFormat', 'GIF', 'gif'
+      def label_image_format(format)
+        code_description 'LabelImageFormat', "#{format}", "#{format}"
       end
 
       def label_stock_size(size)

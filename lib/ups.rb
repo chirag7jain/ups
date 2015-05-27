@@ -1,5 +1,6 @@
 module UPS
   autoload :SERVICES,              'ups/services'
+  autoload :PACKAGING,             'ups/packaging'
 
   autoload :Version,               'ups/version'
   autoload :Connection,            'ups/connection'
