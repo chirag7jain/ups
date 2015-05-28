@@ -17,6 +17,7 @@ describe UPS::Builders::ShipConfirmBuilder do
       ship_confirm_builder.add_ship_to ship_to
       ship_confirm_builder.add_ship_from shipper
       ship_confirm_builder.add_package package
+      ship_confirm_builder.add_label_specification 'gif', { height: '100', width: '100' }
     end
 
     it "should generate a valid XML Request" do
