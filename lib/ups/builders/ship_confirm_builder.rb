@@ -13,7 +13,7 @@ module UPS
 
       # Initializes a new {ShipConfirmBuilder} object
       #
-      def initialize(opts={})
+      def initialize
         super 'ShipmentConfirmRequest'
 
         add_request 'ShipConfirm', 'validate'
