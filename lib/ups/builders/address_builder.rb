@@ -34,26 +34,40 @@ module UPS
       # @return [void]
       def validate
         country_code = opts[:country].downcase
-        case country_code
-        when 'us'
-          validate_us_address
-        when 'ie'
-          opts[:state] = UPS::Data.ie_state_matcher(opts[:state])
-        else
-          opts[:state] = ''
-        end
+        opts[:state] = case country_code
+                       when 'us'
+                         normalize_us_state(opts[:state])
+                       when 'ca'
+                         normalize_ca_state(opts[:state])
+                       when 'ie'
+                         UPS::Data.ie_state_matcher(opts[:state])
+                       else
+                         ''
+                       end
       end
 
       # Changes :state based on UPS requirements for US Addresses
       #
-      # @return [void]
-      def validate_us_address
-        state = opts[:state]
-        opts[:state] = if state.to_str.length > 2
-                         UPS::Data::US_STATES[state] || state
-                       else
-                         state.upcase
-                       end
+      # @param [String] state The US State to normalize
+      # @return [String]
+      def normalize_us_state(state)
+        if state.to_str.length > 2
+          UPS::Data::US_STATES[state] || state
+        else
+          state.upcase
+        end
+      end
+
+      # Changes :state based on UPS requirements for CA Addresses
+      #
+      # @param [String] state The CA State to normalize
+      # @return [String]
+      def normalize_ca_state(state)
+        if state.to_str.length > 2
+          UPS::Data::CANADIAN_STATES[state] || state
+        else
+          state.upcase
+        end
       end
 
       # Returns an XML representation of address_line_1

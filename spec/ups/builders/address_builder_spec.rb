@@ -35,6 +35,40 @@ describe UPS::Builders::AddressBuilder do
     end
   end
 
+  context "when passed a Canadian Address" do
+    let(:address_hash) { {
+      address_line_1: '1253 McGill College',
+      city: 'Montreal',
+      state: 'Quebec',
+      postal_code: 'H3B 2Y5',
+      country: 'CA',
+    } }
+
+    context "with a non-abbreviated state" do
+      subject { UPS::Builders::AddressBuilder.new address_hash }
+
+      it "should change the state to be the abbreviated state name" do
+        expect(subject.opts[:state]).to eql 'QC'
+      end
+    end
+
+    context "with a non-abbreviated state with mixed casing" do
+      subject { UPS::Builders::AddressBuilder.new address_hash.merge({ state: 'QuEbEc' }) }
+
+      it "should change the state to be the abbreviated state name" do
+        expect(subject.opts[:state]).to eql 'QC'
+      end
+    end
+
+    context "with an abbreviated state" do
+      subject { UPS::Builders::AddressBuilder.new address_hash.merge({ state: 'qc' }) }
+
+      it "should retrun the abbreviated state" do
+        expect(subject.opts[:state]).to eql 'QC'
+      end
+    end
+  end
+
   context "when passed a IE address" do
     let(:address_hash) { {
       address_line_1: 'Barrow Street',
