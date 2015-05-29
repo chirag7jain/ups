@@ -28,9 +28,7 @@ module UPS
           label_spec << label_print_method(format)
           label_spec << label_image_format(format)
           label_spec << label_stock_size(size)
-
-          # Required only when Format is GIF
-          label_spec << element_with_value('HTTPUserAgent', version_string) if format.downcase == 'gif'
+          label_spec << element_with_value('HTTPUserAgent', version_string) if gif?(format)
         end
       end
 
@@ -58,6 +56,10 @@ module UPS
 
       private
 
+      def gif?(string)
+        string.downcase == 'gif'
+      end
+
       def version_string
         "RubyUPS/#{UPS::Version::STRING}"
       end
@@ -71,7 +73,9 @@ module UPS
       end
 
       def label_stock_size(size)
-        multi_valued('LabelStockSize', {'Height' => size[:height].to_s, 'Width' => size[:width].to_s})
+        multi_valued('LabelStockSize',
+                     'Height' => size[:height].to_s,
+                     'Width' => size[:width].to_s)
       end
     end
   end

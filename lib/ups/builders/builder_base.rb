@@ -191,12 +191,12 @@ module UPS
       end
 
       def code_description(name, code, description)
-        multi_valued(name, {'Code' => code, 'Description' => description})
+        multi_valued(name, { 'Code' => code, 'Description' => description })
       end
 
       def multi_valued(name, params)
         Element.new(name).tap do |e|
-          params.each {|key, value| e << element_with_value(key, value) }
+          params.each { |key, value| e << element_with_value(key, value) }
         end
       end
     end
