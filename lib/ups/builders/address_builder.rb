@@ -76,6 +76,14 @@ module UPS
         element_with_value('AddressLine1', opts[:address_line_1][0..34])
       end
 
+      # Returns an XML representation of address_line_2
+      #
+      # @return [Ox::Element] XML representation of address_line_2 address part
+      def address_line_2
+        data = (opts.key? :address_line_2) ? opts[:address_line_2][0..34] : ''
+        element_with_value('AddressLine2', data)
+      end
+
       # Returns an XML representation of city
       #
       # @return [Ox::Element] XML representation of the city address part
@@ -110,6 +118,7 @@ module UPS
       def to_xml
         Element.new('Address').tap do |address|
           address << address_line_1
+          address << address_line_2
           address << city
           address << state
           address << postal_code

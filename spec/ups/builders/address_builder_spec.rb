@@ -3,7 +3,8 @@ require "spec_helper"
 describe UPS::Builders::AddressBuilder do
   context "when passed a US Address" do
     let(:address_hash) { {
-      address_line_1: '1600 Amphitheatre Parkway',
+      address_line_1: 'Googleplex',
+      address_line_2: '1600 Amphitheatre Parkway',
       city: 'Mountain View',
       state: 'California',
       postal_code: '94043',
