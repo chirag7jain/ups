@@ -191,7 +191,7 @@ module UPS
       end
 
       def code_description(name, code, description)
-        multi_valued(name, { 'Code' => code, 'Description' => description })
+        multi_valued(name, Code: code, Description: description)
       end
 
       def multi_valued(name, params)

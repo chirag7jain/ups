@@ -75,13 +75,11 @@ module UPS
       end
 
       confirm_response = make_confirm_request(confirm_builder)
-      if confirm_response.success?
-        accept_builder = build_accept_request_from_confirm(confirm_builder,
-                                                           confirm_response)
-        make_accept_request accept_builder
-      else
-        confirm_response
-      end
+      return confirm_response unless confirm_response.success?
+
+      accept_builder = build_accept_request_from_confirm(confirm_builder,
+                                                         confirm_response)
+      make_accept_request accept_builder
     end
 
     private

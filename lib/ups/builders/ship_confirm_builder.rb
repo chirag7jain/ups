@@ -28,7 +28,7 @@ module UPS
           label_spec << label_print_method(format)
           label_spec << label_image_format(format)
           label_spec << label_stock_size(size)
-          label_spec << element_with_value('HTTPUserAgent', version_string) if gif?(format)
+          label_spec << http_user_agent if gif?(format)
         end
       end
 
@@ -58,6 +58,10 @@ module UPS
 
       def gif?(string)
         string.downcase == 'gif'
+      end
+
+      def http_user_agent
+        element_with_value('HTTPUserAgent', version_string)
       end
 
       def version_string
