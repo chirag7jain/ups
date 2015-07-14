@@ -1,11 +1,8 @@
 require 'spec_helper'
 
 class UPS::Builders::TestRateBuilder < Minitest::Test
+  include SchemaPath
   include ShippingOptions
-
-  def schema
-    File.expand_path(File.join(File.dirname(__FILE__), "../../support/RateRequest.xsd"))
-  end
 
   def setup
     @rate_builder = UPS::Builders::RateBuilder.new do |builder|
@@ -18,6 +15,6 @@ class UPS::Builders::TestRateBuilder < Minitest::Test
   end
 
   def test_validates_against_xsd
-    assert_passes_validation schema, @rate_builder.to_xml
+    assert_passes_validation schema_path('RateRequest.xsd'), @rate_builder.to_xml
   end
 end

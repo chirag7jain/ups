@@ -13,5 +13,7 @@ ENV['UPS_ACCOUNT_NUMBER'] = '' unless ENV.key? 'UPS_ACCOUNT_NUMBER'
 require 'nokogiri'
 require 'minitest/spec'
 require 'minitest/autorun'
+
+require 'support/schema_path'
 require 'support/shipping_options'
 require 'support/xsd_validator'

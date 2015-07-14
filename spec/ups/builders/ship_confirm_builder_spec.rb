@@ -1,11 +1,8 @@
 require 'spec_helper'
 
 class UPS::Builders::TestShipConfirmBuilder < Minitest::Test
+  include SchemaPath
   include ShippingOptions
-
-  def schema
-    File.expand_path(File.join(File.dirname(__FILE__), "../../support/ShipConfirmRequest.xsd"))
-  end
 
   def setup
     @ship_confirm_builder = UPS::Builders::ShipConfirmBuilder.new do |builder|
@@ -20,6 +17,6 @@ class UPS::Builders::TestShipConfirmBuilder < Minitest::Test
   end
 
   def test_validates_against_xsd
-    assert_passes_validation schema, @ship_confirm_builder.to_xml
+    assert_passes_validation schema_path('ShipConfirmRequest.xsd'), @ship_confirm_builder.to_xml
   end
 end
