@@ -1,5 +1,4 @@
 AllCops:
-AllCops:
   Include:
   - "**/*.gemspec"
   - "**/*.podspec"

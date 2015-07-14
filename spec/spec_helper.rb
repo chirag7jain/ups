@@ -1,7 +1,7 @@
-require "codeclimate-test-reporter"
+require 'codeclimate-test-reporter'
 CodeClimate::TestReporter.start
 
-path = File.expand_path("../../", __FILE__)
+path = File.expand_path('../../', __FILE__)
 require "#{path}/lib/ups.rb"
 
 # Set default env parameters to prevent CI failing on pull requests
