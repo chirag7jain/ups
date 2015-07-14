@@ -1,7 +1,7 @@
 require "spec_helper"
 
 describe UPS::Builders::AddressBuilder do
-  context "when passed a US Address" do
+  describe "when passed a US Address" do
     let(:address_hash) { {
       address_line_1: 'Googleplex',
       address_line_2: '1600 Amphitheatre Parkway',
@@ -11,32 +11,32 @@ describe UPS::Builders::AddressBuilder do
       country: 'US',
     } }
 
-    context "with a non-abbreviated state" do
+    describe "with a non-abbreviated state" do
       subject { UPS::Builders::AddressBuilder.new address_hash }
 
       it "should change the state to be the abbreviated state name" do
-        expect(subject.opts[:state]).to eql 'CA'
+        subject.opts[:state].must_equal 'CA'
       end
     end
 
-    context "with a non-abbreviated state with mixed casing" do
+    describe "with a non-abbreviated state with mixed casing" do
       subject { UPS::Builders::AddressBuilder.new address_hash.merge({ state: 'CaLiFoRnIa' }) }
 
       it "should change the state to be the abbreviated state name" do
-        expect(subject.opts[:state]).to eql 'CA'
+        subject.opts[:state].must_equal 'CA'
       end
     end
 
-    context "with an abbreviated state" do
+    describe "with an abbreviated state" do
       subject { UPS::Builders::AddressBuilder.new address_hash.merge({ state: 'ca' }) }
 
       it "should retrun the abbreviated state" do
-        expect(subject.opts[:state]).to eql 'CA'
+        subject.opts[:state].must_equal 'CA'
       end
     end
   end
 
-  context "when passed a Canadian Address" do
+  describe "when passed a Canadian Address" do
     let(:address_hash) { {
       address_line_1: '1253 McGill College',
       city: 'Montreal',
@@ -45,32 +45,32 @@ describe UPS::Builders::AddressBuilder do
       country: 'CA',
     } }
 
-    context "with a non-abbreviated state" do
+    describe "with a non-abbreviated state" do
       subject { UPS::Builders::AddressBuilder.new address_hash }
 
       it "should change the state to be the abbreviated state name" do
-        expect(subject.opts[:state]).to eql 'QC'
+        subject.opts[:state].must_equal 'QC'
       end
     end
 
-    context "with a non-abbreviated state with mixed casing" do
+    describe "with a non-abbreviated state with mixed casing" do
       subject { UPS::Builders::AddressBuilder.new address_hash.merge({ state: 'QuEbEc' }) }
 
       it "should change the state to be the abbreviated state name" do
-        expect(subject.opts[:state]).to eql 'QC'
+        subject.opts[:state].must_equal 'QC'
       end
     end
 
-    context "with an abbreviated state" do
+    describe "with an abbreviated state" do
       subject { UPS::Builders::AddressBuilder.new address_hash.merge({ state: 'qc' }) }
 
       it "should retrun the abbreviated state" do
-        expect(subject.opts[:state]).to eql 'QC'
+        subject.opts[:state].must_equal 'QC'
       end
     end
   end
 
-  context "when passed a IE address" do
+  describe "when passed a IE address" do
     let(:address_hash) { {
       address_line_1: 'Barrow Street',
       city: 'Dublin 4',
@@ -79,18 +79,18 @@ describe UPS::Builders::AddressBuilder do
       country: 'IE',
     } }
 
-    context "normalizes the state field" do
+    describe "normalizes the state field" do
       subject { UPS::Builders::AddressBuilder.new address_hash }
 
       it "should change the state to be the abbreviated state name" do
-        expect(subject.opts[:state]).to eql 'Dublin'
+        subject.opts[:state].must_equal 'Dublin'
       end
     end
 
-    context "when passed a empty state" do
+    describe "when passed a empty state" do
       subject { UPS::Builders::AddressBuilder.new address_hash.merge({ state: '' }) }
       it "should throw an exception" do
-        expect { subject }.to raise_error(UPS::Exceptions::InvalidAttributeError)
+        proc { subject }.must_raise UPS::Exceptions::InvalidAttributeError
       end
     end
   end

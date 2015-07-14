@@ -3,6 +3,8 @@ require 'tempfile'
 require 'support/shipping_options'
 
 describe UPS::Connection do
+  include ShippingOptions
+
   before do
     Excon.defaults[:mock] = true
   end
@@ -11,12 +13,10 @@ describe UPS::Connection do
     Excon.stubs.clear
   end
 
-  include_context 'Shipping Options'
-
   let(:stub_path) { File.expand_path("../../../stubs", __FILE__) }
   let(:server) { UPS::Connection.new(test_mode: true) }
 
-  context "if requesting a shipment" do
+  describe "if requesting a shipment" do
     before do
       Excon.stub({:method => :post}) do |params|
         case params[:path]
@@ -41,16 +41,15 @@ describe UPS::Connection do
     end
 
     it "should do what ever it takes to get that shipment shipped!" do
-      expect { subject }.not_to raise_error
-      expect(subject).not_to eql false
-      expect(subject.success?).to eql true
-      expect(subject.graphic_image).to be_a Tempfile
-      expect(subject.html_image).to be_a Tempfile
-      expect(subject.tracking_number).to eql '1Z2220060292353829'
+      subject.wont_equal false
+      subject.success?.must_equal true
+      subject.graphic_image.must_be_kind_of File
+      subject.html_image.must_be_kind_of File
+      subject.tracking_number.must_equal '1Z2220060292353829'
     end
   end
 
-  context "ups returns an error during ship confirm" do
+  describe "ups returns an error during ship confirm" do
     before do
       Excon.stub({:method => :post}) do |params|
         case params[:path]
@@ -73,14 +72,13 @@ describe UPS::Connection do
     end
 
     it "should return a Parsed response with an error code and error description" do
-      expect { subject }.not_to raise_error
-      expect(subject).not_to eql false
-      expect(subject.success?).to eql false
-      expect(subject.error_description).to eql "Missing or invalid shipper number"
+      subject.wont_equal false
+      subject.success?.must_equal false
+      subject.error_description.must_equal "Missing or invalid shipper number"
     end
   end
 
-  context "ups returns an error during ship accept" do
+  describe "ups returns an error during ship accept" do
     before do
       Excon.stub({:method => :post}) do |params|
         case params[:path]
@@ -105,10 +103,9 @@ describe UPS::Connection do
     end
 
     it "should return a Parsed response with an error code and error description" do
-      expect { subject }.not_to raise_error
-      expect(subject).not_to eql false
-      expect(subject.success?).to eql false
-      expect(subject.error_description).to eql "Missing or invalid shipper number"
+      subject.wont_equal false
+      subject.success?.must_equal false
+      subject.error_description.must_equal "Missing or invalid shipper number"
     end
   end
 end

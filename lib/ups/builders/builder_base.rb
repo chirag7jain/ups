@@ -35,6 +35,8 @@ module UPS
 
         document << access_request
         document << root
+
+        yield self if block_given?
       end
 
       # Initializes a new {BuilderBase} object

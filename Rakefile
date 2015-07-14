@@ -1,18 +1,9 @@
-require 'bundler'
-Bundler.setup
-
 require 'rake'
-require 'rspec'
-require 'rspec/core/rake_task'
+require 'rake/testtask'
 
-RSpec::Core::RakeTask.new('spec') do |spec|
-  spec.pattern = 'spec/**/*_spec.rb'
+Rake::TestTask.new do |t|
+  t.pattern = 'spec/**/*_spec.rb'
+  t.libs.push 'spec'
 end
 
-Dir.glob('tasks/*.rake').each { |r| import r }
-
-task default: :spec
-
-task :console do
-  exec 'irb -r ups -I ./lib'
-end
+task :default => :test

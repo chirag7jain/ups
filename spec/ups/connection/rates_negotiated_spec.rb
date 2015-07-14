@@ -1,7 +1,8 @@
 require 'spec_helper'
-require 'support/shipping_options'
 
 describe UPS::Connection do
+  include ShippingOptions
+
   before do
     Excon.defaults[:mock] = true
   end
@@ -10,12 +11,10 @@ describe UPS::Connection do
     Excon.stubs.clear
   end
 
-  include_context 'Shipping Options'
-
   let(:stub_path) { File.expand_path("../../../stubs", __FILE__) }
   let(:server) { UPS::Connection.new(test_mode: true) }
 
-  context "if requesting rates" do
+  describe "if requesting rates" do
     before do
       Excon.stub({:method => :post}) do |params|
         case params[:path]
@@ -37,9 +36,8 @@ describe UPS::Connection do
     end
 
     it "should return neotiated rates" do
-      expect { subject }.not_to raise_error
-      expect(subject.rated_shipments).not_to be_empty
-      expect(subject.rated_shipments).to eql [
+      expect(subject.rated_shipments).wont_be_empty
+      expect(subject.rated_shipments).must_equal [
         {:service_code=>"11", :service_name=>"UPS Standard", :total=>"24.78"},
         {:service_code=>"65", :service_name=>"UPS Saver", :total=>"45.15"},
         {:service_code=>"54", :service_name=>"Express Plus", :total=>"80.89"},
