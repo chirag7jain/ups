@@ -112,6 +112,10 @@ module UPS
         element_with_value('CountryCode', opts[:country][0..1])
       end
 
+      def email_address
+        element_with_value('EmailAddress', opts[:email_address][0..49])
+      end
+
       # Returns an XML representation of a UPS Address
       #
       # @return [Ox::Element] XML representation of the current object
@@ -119,6 +123,7 @@ module UPS
         Element.new('Address').tap do |address|
           address << address_line_1
           address << address_line_2
+          address << email_address if opts[:email_address]
           address << city
           address << state
           address << postal_code
