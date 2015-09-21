@@ -9,6 +9,7 @@ describe UPS::Builders::AddressBuilder do
       state: 'California',
       postal_code: '94043',
       country: 'US',
+      email_address: 'nobody@example.org'
     } }
 
     describe "with a non-abbreviated state" do

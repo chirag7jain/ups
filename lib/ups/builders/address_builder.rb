@@ -112,6 +112,9 @@ module UPS
         element_with_value('CountryCode', opts[:country][0..1])
       end
 
+      # Returns an XML representation of email
+      #
+      # @return [Ox::Element] XML representation of the email address
       def email_address
         element_with_value('EmailAddress', opts[:email_address][0..49])
       end
