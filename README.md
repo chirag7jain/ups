@@ -11,8 +11,6 @@ UPS Gem for accessing the UPS API from Ruby. Using the gem you can:
   - Book shipments
   - Return labels and tracking numbers for a shipment
 
-This gem is currently used in production at [Veeqo](http://www.veeqo.com)
-
 ## Installation
 
     gem install ups
