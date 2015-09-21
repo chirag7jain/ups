@@ -1,15 +1,16 @@
 module ShippingOptions
   def shipper
     {
-      company_name: 'Veeqo Limited',
+      company_name: 'White Residence',
       attention_name: 'Walter White',
       phone_number: '01792 123456',
-      address_line_1: '11 Wind Street',
-      city: 'Swansea',
-      state: 'Wales',
-      postal_code: 'SA1 1DA',
-      country: 'GB',
-      shipper_number: ENV['UPS_ACCOUNT_NUMBER']
+      address_line_1: '308 Negra Arroyo Lane',
+      city: 'Albuquerque',
+      state: 'New Mexico',
+      postal_code: '87104',
+      country: 'US',
+      shipper_number: ENV['UPS_ACCOUNT_NUMBER'],
+      email_address: 'nobody@example.com'
     }
   end
 
@@ -22,7 +23,8 @@ module ShippingOptions
       city: 'London',
       state: 'England',
       postal_code: 'WC2H 8AG',
-      country: 'GB'
+      country: 'GB',
+      email_address: 'nobody@example.com'
     }
   end
 
