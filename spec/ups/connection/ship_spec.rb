@@ -4,13 +4,10 @@ require 'support/shipping_options'
 
 describe UPS::Connection do
   include ShippingOptions
+  include UrlStubbing
 
   before do
-    Excon.defaults[:mock] = true
-  end
-
-  after do
-    Excon.stubs.clear
+    Typhoeus::Expectation.clear
   end
 
   let(:stub_path) { File.expand_path("../../../stubs", __FILE__) }
@@ -18,14 +15,8 @@ describe UPS::Connection do
 
   describe "if requesting a shipment" do
     before do
-      Excon.stub({:method => :post}) do |params|
-        case params[:path]
-        when UPS::Connection::SHIP_CONFIRM_PATH
-          {body: File.read("#{stub_path}/ship_confirm_success.xml"), status: 200}
-        when UPS::Connection::SHIP_ACCEPT_PATH
-          {body: File.read("#{stub_path}/ship_accept_success.xml"), status: 200}
-        end
-      end
+      add_url_stub(UPS::Connection::TEST_URL, UPS::Connection::SHIP_CONFIRM_PATH, 'ship_confirm_success.xml')
+      add_url_stub(UPS::Connection::TEST_URL, UPS::Connection::SHIP_ACCEPT_PATH, 'ship_accept_success.xml')
     end
 
     subject do
@@ -51,12 +42,7 @@ describe UPS::Connection do
 
   describe "ups returns an error during ship confirm" do
     before do
-      Excon.stub({:method => :post}) do |params|
-        case params[:path]
-        when UPS::Connection::SHIP_CONFIRM_PATH
-          {body: File.read("#{stub_path}/ship_confirm_failure.xml"), status: 200}
-        end
-      end
+      add_url_stub(UPS::Connection::TEST_URL, UPS::Connection::SHIP_CONFIRM_PATH, 'ship_confirm_failure.xml')
     end
 
     subject do
@@ -80,14 +66,8 @@ describe UPS::Connection do
 
   describe "ups returns an error during ship accept" do
     before do
-      Excon.stub({:method => :post}) do |params|
-        case params[:path]
-        when UPS::Connection::SHIP_CONFIRM_PATH
-          {body: File.read("#{stub_path}/ship_confirm_success.xml"), status: 200}
-        when UPS::Connection::SHIP_ACCEPT_PATH
-          {body: File.read("#{stub_path}/ship_accept_failure.xml"), status: 200}
-        end
-      end
+      add_url_stub(UPS::Connection::TEST_URL, UPS::Connection::SHIP_CONFIRM_PATH, 'ship_confirm_success.xml')
+      add_url_stub(UPS::Connection::TEST_URL, UPS::Connection::SHIP_ACCEPT_PATH, 'ship_accept_failure.xml')
     end
 
     subject do

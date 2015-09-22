@@ -2,13 +2,10 @@ require 'spec_helper'
 
 describe UPS::Connection do
   include ShippingOptions
+  include UrlStubbing
 
   before do
-    Excon.defaults[:mock] = true
-  end
-
-  after do
-    Excon.stubs.clear
+    Typhoeus::Expectation.clear
   end
 
   let(:stub_path) { File.expand_path("../../../stubs", __FILE__) }
@@ -16,12 +13,7 @@ describe UPS::Connection do
 
   describe "if requesting rates" do
     before do
-      Excon.stub({:method => :post}) do |params|
-        case params[:path]
-        when UPS::Connection::RATE_PATH
-          {body: File.read("#{stub_path}/rates_negotiated_success.xml"), status: 200}
-        end
-      end
+      add_url_stub(UPS::Connection::TEST_URL, UPS::Connection::RATE_PATH, 'rates_negotiated_success.xml')
     end
 
     subject do

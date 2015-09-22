@@ -1,5 +1,5 @@
 require 'uri'
-require 'excon'
+require 'typhoeus'
 require 'digest/md5'
 require 'ox'
 
@@ -89,7 +89,7 @@ module UPS
     end
 
     def get_response_stream(path, body)
-      response = Excon.post(build_url(path), body: body)
+      response = Typhoeus.post(build_url(path), body: body)
       StringIO.new(response.body)
     end
 
