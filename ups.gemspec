@@ -14,7 +14,7 @@ Gem::Specification.new do |gem|
 
   gem.required_rubygems_version = '>= 1.3.6'
 
-  gem.add_runtime_dependency 'ox', '~> 2.2', '>= 2.2.0'
+  gem.add_runtime_dependency 'ox', '>= 2.2', '<= 2.4.0'
   gem.add_runtime_dependency 'typhoeus', '~> 1.0.0'
   gem.add_runtime_dependency 'insensitive_hash', '~> 0.3.3'
   gem.add_runtime_dependency 'levenshtein-ffi', '~> 1.1'
