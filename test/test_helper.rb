@@ -19,3 +19,5 @@ require 'support/schema_path'
 require 'support/shipping_options'
 require 'support/xsd_validator'
 require 'support/url_stubbing'
+
+require 'byebug'
