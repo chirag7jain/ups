@@ -25,3 +25,4 @@ require 'support/xsd_validator'
 require 'support/url_stubbing'
 
 require 'byebug'
+require 'typhoeus'

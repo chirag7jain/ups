@@ -1,5 +1,5 @@
 # frozen_string_literal: true
-require 'spec_helper'
+require 'test_helper'
 
 class RatesNegotatiedTest < Minitest::Test
   include ShippingOptions
@@ -11,10 +11,10 @@ class RatesNegotatiedTest < Minitest::Test
 
   def test_returns_negotatied_rates
     stub_rates_url
-    server.rates do |rate_builder|
+    rates = server.rates do |rate_builder|
       setup_rate_builder(rate_builder)
     end
-    assert_equal EXPECTED_RATED_SHIPMENTS, server.rates
+    assert_equal EXPECTED_RATED_SHIPMENTS, rates.rated_shipments
   end
 
   #   it "should return neotiated rates" do
