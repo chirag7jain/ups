@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module UPS
   module Data
     IE_COUNTY_PREFIXES = [
@@ -10,6 +11,6 @@ module UPS
       'Co.',
       'Co',
       'C.'
-    ]
+    ].freeze
   end
 end

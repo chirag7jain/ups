@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'levenshtein'
 
 module UPS
@@ -26,7 +27,7 @@ module UPS
       # @return [String] The closest matching irish state with the specified
       #   name
       def ie_state_matcher(match_string)
-        fail Exceptions::InvalidAttributeError, EMPTY_STATE_MESSAGE if
+        raise Exceptions::InvalidAttributeError, EMPTY_STATE_MESSAGE if
           match_string.nil? || match_string.empty?
 
         normalized_string = ie_state_normalizer string_normalizer match_string

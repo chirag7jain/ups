@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'test_helper'
 
 class UPS::Builders::TestShipAcceptBuilder < Minitest::Test
@@ -6,7 +7,7 @@ class UPS::Builders::TestShipAcceptBuilder < Minitest::Test
   def setup
     @ship_accept_builder = UPS::Builders::ShipAcceptBuilder.new do |builder|
       builder.add_access_request ENV['UPS_LICENSE_NUMBER'], ENV['UPS_USER_ID'], ENV['UPS_PASSWORD']
-      builder.add_shipment_digest "rO0ABXNy...HB4cA=="
+      builder.add_shipment_digest 'rO0ABXNy...HB4cA=='
     end
   end
 
