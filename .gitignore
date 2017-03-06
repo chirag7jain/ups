@@ -20,4 +20,4 @@ doc/
 *.komodoproject
 test.rb
 
-.byebug-history
+.byebug_history
