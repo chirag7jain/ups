@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'test_helper'
 
 class UPS::Builders::TestShipAcceptBuilder < Minitest::Test
   include SchemaPath
