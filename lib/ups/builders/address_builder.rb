@@ -81,7 +81,7 @@ module UPS
       #
       # @return [Ox::Element] XML representation of address_line_2 address part
       def address_line_2
-        data = opts.key? :address_line_2 ? opts[:address_line_2][0..34] : ''
+        data = opts.key?(:address_line_2) ? opts[:address_line_2][0..34] : ''
         element_with_value('AddressLine2', data)
       end
 
