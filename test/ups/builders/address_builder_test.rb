@@ -23,6 +23,15 @@ class UpsBuildersAddressBuilderTest < Minitest::Test
     assert_equal 'CA', subject.opts[:state]
   end
 
+  def test_us_address_xml_dump_is_as_accepted
+    subject = UPS::Builders::AddressBuilder.new us_address_hash
+    ox_element = subject.to_xml
+    assert_equal(
+      expected_us_address_xml_dump,
+      Ox.dump(ox_element)
+    )
+  end
+
   # Canadian addresses
   #
   def test_abbreviates_canadian_state
@@ -73,6 +82,14 @@ class UpsBuildersAddressBuilderTest < Minitest::Test
       country: 'US',
       email_address: 'nobody@example.org'
     }
+  end
+
+  def expected_us_address_xml_dump
+    @us_xml_dump ||= File.open(
+      'test/xml_expectations/expected_us_address.xml',
+      'rb',
+      &:read
+    )
   end
 
   def canadian_address_hash

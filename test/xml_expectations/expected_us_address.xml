@@ -1,0 +1,10 @@
+
+<Address>
+  <AddressLine1>Googleplex</AddressLine1>
+  <AddressLine2>1600 Amphitheatre Parkway</AddressLine2>
+  <EmailAddress>nobody@example.org</EmailAddress>
+  <City>Mountain View</City>
+  <StateProvinceCode>CA</StateProvinceCode>
+  <PostalCode>94043</PostalCode>
+  <CountryCode>US</CountryCode>
+</Address>
