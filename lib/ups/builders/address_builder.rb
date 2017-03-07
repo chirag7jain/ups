@@ -86,8 +86,7 @@ module UPS
       #
       # @return [Ox::Element] XML representation of address_line_2 address part
       def address_line_2
-        data = opts.key?(:address_line_2) ? opts[:address_line_2][0..34] : ''
-        element_with_value('AddressLine2', data)
+        element_with_value('AddressLine2', address_line2_data)
       end
 
       # Returns an XML representation of city
@@ -152,6 +151,11 @@ module UPS
           next if field == :email_address && !opts[:email_address]
           address << send(field)
         end
+      end
+
+      def address_line2_data
+        return '' unless opts[:address_line_2]
+        opts[:address_line_2][0..34]
       end
     end
   end

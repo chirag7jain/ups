@@ -66,9 +66,8 @@ class UpsBuildersAddressBuilderTest < Minitest::Test
         address_line_2: nil
       )
     )
-    assert_raises NoMethodError do
-      subject.address_line_2
-    end
+    assert_equal [''], subject.address_line_2.nodes
+    assert_equal 'AddressLine2', subject.address_line_2.value
   end
 
   # US addresses
@@ -172,9 +171,11 @@ class UpsBuildersAddressBuilderTest < Minitest::Test
   # Document behavior with nil values
   def test_address_builder_with_nil_values
     subject = UPS::Builders::AddressBuilder.new address_with_nil_values
-    assert_raises NoMethodError do
-      subject.to_xml
-    end
+    ox_element = subject.to_xml
+    assert_equal(
+      expected_address_with_nil_values_xml_dump,
+      Ox.dump(ox_element)
+    )
   end
 
   private
@@ -310,6 +311,14 @@ class UpsBuildersAddressBuilderTest < Minitest::Test
   def expected_french_address_xml_dump
     @french_xml_dump ||= File.open(
       'test/xml_expectations/expected_french_address.xml',
+      'rb',
+      &:read
+    )
+  end
+
+  def expected_address_with_nil_values_xml_dump
+    @with_nil_values_xml_dump ||= File.open(
+      'test/xml_expectations/expected_address_with_nil_values.xml',
       'rb',
       &:read
     )
