@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'uri'
 require 'typhoeus'
 require 'digest/md5'
@@ -24,7 +25,7 @@ module UPS
 
     DEFAULT_PARAMS = {
       test_mode: false
-    }
+    }.freeze
 
     # Initializes a new {Connection} object
     #
@@ -33,7 +34,7 @@ module UPS
     #   requests to the UPS URL
     def initialize(params = {})
       params = DEFAULT_PARAMS.merge(params)
-      self.url = (params[:test_mode]) ? TEST_URL : LIVE_URL
+      self.url = params[:test_mode] ? TEST_URL : LIVE_URL
     end
 
     # Makes a request to fetch Rates for a shipment.

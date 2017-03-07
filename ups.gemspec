@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require File.expand_path('../lib/ups/version', __FILE__)
 
 Gem::Specification.new do |gem|
@@ -19,6 +20,8 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency 'insensitive_hash', '~> 0.3.3'
   gem.add_runtime_dependency 'levenshtein-ffi', '~> 1.1'
 
-  gem.files        = `git ls-files`.split($OUTPUT_RECORD_SEPARATOR)
+  gem.files = `git ls-files -z`.split("\x0").reject do |f|
+    f.match(%r{^(test|spec|features)/})
+  end
   gem.require_path = 'lib'
 end

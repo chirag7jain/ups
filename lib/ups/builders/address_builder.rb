@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'ox'
 
 module UPS
@@ -8,6 +9,9 @@ module UPS
     # @since 0.1.0
     # @attr [Hash] opts The Address Parts
     class AddressBuilder < BuilderBase
+      class USAddressesMustHaveAState < UpsGemException; end
+      class AddressMustHaveALine1 < UpsGemException; end
+
       include Ox
 
       attr_accessor :opts
@@ -50,6 +54,7 @@ module UPS
       # @param [String] state The US State to normalize
       # @return [String]
       def normalize_us_state(state)
+        raise USAddressesMustHaveAState unless state
         if state.to_str.length > 2
           UPS::Data::US_STATES[state] || state
         else
@@ -73,6 +78,7 @@ module UPS
       #
       # @return [Ox::Element] XML representation of address_line_1 address part
       def address_line_1
+        raise AddressMustHaveALine1 unless opts[:address_line_1]
         element_with_value('AddressLine1', opts[:address_line_1][0..34])
       end
 
@@ -80,8 +86,14 @@ module UPS
       #
       # @return [Ox::Element] XML representation of address_line_2 address part
       def address_line_2
-        data = (opts.key? :address_line_2) ? opts[:address_line_2][0..34] : ''
-        element_with_value('AddressLine2', data)
+        element_with_value('AddressLine2', address_line2_data)
+      end
+
+      # Returns an XML representation of address_line_3
+      #
+      # @return [Ox::Element] XML representation of address_line_3 address part
+      def address_line_3
+        element_with_value('AddressLine3', address_line3_data)
       end
 
       # Returns an XML representation of city
@@ -124,14 +136,40 @@ module UPS
       # @return [Ox::Element] XML representation of the current object
       def to_xml
         Element.new('Address').tap do |address|
-          address << address_line_1
-          address << address_line_2
-          address << email_address if opts[:email_address]
-          address << city
-          address << state
-          address << postal_code
-          address << country
+          setup_address address
         end
+      end
+
+      private
+
+      ADDRESS_FIELDS = %i(
+        address_line_1
+        address_line_2
+        address_line_3
+        email_address
+        city
+        state
+        postal_code
+        country
+      ).freeze
+      private_constant :ADDRESS_FIELDS
+
+      def setup_address(address)
+        ADDRESS_FIELDS.each do |field|
+          next if field == :email_address && !opts[:email_address]
+          next if field == :address_line_3 && !opts[:address_line_3]
+          address << send(field)
+        end
+      end
+
+      def address_line2_data
+        return '' unless opts[:address_line_2]
+        opts[:address_line_2][0..34]
+      end
+
+      def address_line3_data
+        return '' unless opts[:address_line_3]
+        opts[:address_line_3][0..34]
       end
     end
   end

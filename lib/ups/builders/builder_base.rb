@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'ox'
 
 module UPS
@@ -186,7 +187,7 @@ module UPS
       end
 
       def element_with_value(name, value)
-        fail InvalidAttributeError, name unless value.respond_to?(:to_str)
+        raise InvalidAttributeError, name unless value.respond_to?(:to_str)
         Element.new(name).tap do |request_action|
           request_action << value.to_str
         end

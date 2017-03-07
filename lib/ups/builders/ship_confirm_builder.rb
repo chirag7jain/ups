@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'ox'
 
 module UPS
@@ -57,7 +58,7 @@ module UPS
       private
 
       def gif?(string)
-        string.downcase == 'gif'
+        string.casecmp('gif').zero?
       end
 
       def http_user_agent
@@ -69,11 +70,11 @@ module UPS
       end
 
       def label_print_method(format)
-        code_description 'LabelPrintMethod', "#{format}", "#{format} file"
+        code_description 'LabelPrintMethod', format.to_s, "#{format} file"
       end
 
       def label_image_format(format)
-        code_description 'LabelImageFormat', "#{format}", "#{format}"
+        code_description 'LabelImageFormat', format.to_s, format.to_s
       end
 
       def label_stock_size(size)

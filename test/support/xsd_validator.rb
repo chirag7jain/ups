@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 require 'minitest/assertions'
 
 module Minitest::Assertions
@@ -7,5 +8,3 @@ module Minitest::Assertions
     schema.validate(document)
   end
 end
-
-String.infect_an_assertion :assert_passes_validation, :must_pass_validation
