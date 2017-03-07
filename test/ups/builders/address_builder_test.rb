@@ -6,9 +6,15 @@ class UpsBuildersAddressBuilderTest < Minitest::Test
   # Basic behavior
   #
 
-  def test_us_address_must_have_a_state
+  def test_us_address_must_have_a_state_no_key_case
     assert_raises NoMethodError do
       UPS::Builders::AddressBuilder.new stateless_us_address_hash
+    end
+  end
+
+  def test_us_address_must_have_a_state_nil_value_case
+    assert_raises NoMethodError do
+      UPS::Builders::AddressBuilder.new us_address_hash_with_nil_state
     end
   end
 
@@ -172,6 +178,18 @@ class UpsBuildersAddressBuilderTest < Minitest::Test
   end
 
   private
+
+  def us_address_hash_with_nil_state
+    {
+      address_line_1: 'Googleplex',
+      address_line_2: '1600 Amphitheatre Parkway',
+      city: 'Mountain View',
+      postal_code: '94043',
+      country: 'US',
+      state: nil,
+      email_address: 'nobody@example.org'
+    }
+  end
 
   def stateless_us_address_hash
     {
