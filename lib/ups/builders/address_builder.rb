@@ -10,6 +10,7 @@ module UPS
     # @attr [Hash] opts The Address Parts
     class AddressBuilder < BuilderBase
       class USAddressesMustHaveAState < ArgumentError; end
+      class AddressMustHaveALine1 < ArgumentError; end
 
       include Ox
 
@@ -77,6 +78,7 @@ module UPS
       #
       # @return [Ox::Element] XML representation of address_line_1 address part
       def address_line_1
+        raise AddressMustHaveALine1 unless opts[:address_line_1]
         element_with_value('AddressLine1', opts[:address_line_1][0..34])
       end
 

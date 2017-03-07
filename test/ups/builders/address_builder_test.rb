@@ -20,7 +20,7 @@ class UpsBuildersAddressBuilderTest < Minitest::Test
 
   def test_raises_without_address_line_1
     subject = UPS::Builders::AddressBuilder.new line1_less_us_address_hash
-    assert_raises NoMethodError do
+    assert_raises UPS::Builders::AddressBuilder::AddressMustHaveALine1 do
       subject.address_line_1
     end
   end
@@ -31,7 +31,7 @@ class UpsBuildersAddressBuilderTest < Minitest::Test
         address_line_1: nil
       )
     )
-    assert_raises NoMethodError do
+    assert_raises UPS::Builders::AddressBuilder::AddressMustHaveALine1 do
       subject.address_line_1
     end
   end
