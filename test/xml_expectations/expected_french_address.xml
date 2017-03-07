@@ -1,0 +1,10 @@
+
+<Address>
+  <AddressLine1>10 rue du Québec</AddressLine1>
+  <AddressLine2>Derrière le Casino, à gauche du par</AddressLine2>
+  <EmailAddress>nobody@example.org</EmailAddress>
+  <City>Labège</City>
+  <StateProvinceCode></StateProvinceCode>
+  <PostalCode>31670</PostalCode>
+  <CountryCode>FR</CountryCode>
+</Address>

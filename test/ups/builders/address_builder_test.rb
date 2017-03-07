@@ -89,6 +89,17 @@ class UpsBuildersAddressBuilderTest < Minitest::Test
     )
   end
 
+  # Document behavior on addresses with special characters
+  #
+  def test_french_address_xml_dump_is_as_accepted
+    subject = UPS::Builders::AddressBuilder.new french_address_hash
+    ox_element = subject.to_xml
+    assert_equal(
+      expected_french_address_xml_dump,
+      Ox.dump(ox_element)
+    )
+  end
+
   private
 
   def us_address_hash
@@ -142,6 +153,25 @@ class UpsBuildersAddressBuilderTest < Minitest::Test
   def expected_irish_address_xml_dump
     @irish_xml_dump ||= File.open(
       'test/xml_expectations/expected_irish_address.xml',
+      'rb',
+      &:read
+    )
+  end
+
+  def french_address_hash
+    {
+      address_line_1: '10 rue du Québec',
+      address_line_2: 'Derrière le Casino, à gauche du parking',
+      city: 'Labège',
+      postal_code: '31670',
+      country: 'FR',
+      email_address: 'nobody@example.org'
+    }
+  end
+
+  def expected_french_address_xml_dump
+    @french_xml_dump ||= File.open(
+      'test/xml_expectations/expected_french_address.xml',
       'rb',
       &:read
     )
