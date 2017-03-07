@@ -178,6 +178,19 @@ class UpsBuildersAddressBuilderTest < Minitest::Test
     )
   end
 
+  #
+  # Document behavior when a third address line is given
+  def test_three_line_us_address_xml_dump_has_no_third_line
+    subject = UPS::Builders::AddressBuilder.new(
+      three_address_line_us_address_hash
+    )
+    ox_element = subject.to_xml
+    assert_equal(
+      expected_three_line_us_address_xml_dump,
+      Ox.dump(ox_element)
+    )
+  end
+
   private
 
   def us_address_hash_with_nil_state
@@ -319,6 +332,27 @@ class UpsBuildersAddressBuilderTest < Minitest::Test
   def expected_address_with_nil_values_xml_dump
     @with_nil_values_xml_dump ||= File.open(
       'test/xml_expectations/expected_address_with_nil_values.xml',
+      'rb',
+      &:read
+    )
+  end
+
+  def three_address_line_us_address_hash
+    {
+      address_line_1: 'Googleplex',
+      address_line_2: '1600 Amphitheatre Parkway',
+      address_line_3: 'Amaury secret place',
+      city: 'Mountain View',
+      state: 'California',
+      postal_code: '94043',
+      country: 'US',
+      email_address: 'nobody@example.org'
+    }
+  end
+
+  def expected_three_line_us_address_xml_dump
+    @three_line_us_xml_dump ||= File.open(
+      'test/xml_expectations/expected_three_line_us_address.xml',
       'rb',
       &:read
     )
