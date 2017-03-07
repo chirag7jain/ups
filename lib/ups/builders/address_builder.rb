@@ -89,6 +89,13 @@ module UPS
         element_with_value('AddressLine2', address_line2_data)
       end
 
+      # Returns an XML representation of address_line_3
+      #
+      # @return [Ox::Element] XML representation of address_line_3 address part
+      def address_line_3
+        element_with_value('AddressLine3', address_line3_data)
+      end
+
       # Returns an XML representation of city
       #
       # @return [Ox::Element] XML representation of the city address part
@@ -138,6 +145,7 @@ module UPS
       ADDRESS_FIELDS = %i(
         address_line_1
         address_line_2
+        address_line_3
         email_address
         city
         state
@@ -149,6 +157,7 @@ module UPS
       def setup_address(address)
         ADDRESS_FIELDS.each do |field|
           next if field == :email_address && !opts[:email_address]
+          next if field == :address_line_3 && !opts[:address_line_3]
           address << send(field)
         end
       end
@@ -156,6 +165,11 @@ module UPS
       def address_line2_data
         return '' unless opts[:address_line_2]
         opts[:address_line_2][0..34]
+      end
+
+      def address_line3_data
+        return '' unless opts[:address_line_3]
+        opts[:address_line_3][0..34]
       end
     end
   end
