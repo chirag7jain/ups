@@ -82,10 +82,10 @@
 #   - case
 #   - end
 #   IndentOneStep: false
-# Style/ClassAndModuleChildren:
-#   Description: Checks style of children classes and modules.
-#   Enabled: false
-#   EnforcedStyle: nested
+Style/ClassAndModuleChildren:
+  Description: Checks style of children classes and modules.
+  Enabled: false
+  EnforcedStyle: compact
 #   SupportedStyles:
 #   - nested
 #   - compact

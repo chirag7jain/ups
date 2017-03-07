@@ -125,13 +125,27 @@ module UPS
       # @return [Ox::Element] XML representation of the current object
       def to_xml
         Element.new('Address').tap do |address|
-          address << address_line_1
-          address << address_line_2
-          address << email_address if opts[:email_address]
-          address << city
-          address << state
-          address << postal_code
-          address << country
+          setup_address address
+        end
+      end
+
+      private
+
+      ADDRESS_FIELDS = %i(
+        address_line_1
+        address_line_2
+        email_address
+        city
+        state
+        postal_code
+        country
+      ).freeze
+      private_constant :ADDRESS_FIELDS
+
+      def setup_address(address)
+        ADDRESS_FIELDS.each do |field|
+          next if field == :email_address && !opts[:email_address]
+          address << send(field)
         end
       end
     end

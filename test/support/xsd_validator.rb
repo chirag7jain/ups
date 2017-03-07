@@ -9,4 +9,7 @@ module Minitest::Assertions
   end
 end
 
-String.infect_an_assertion :assert_passes_validation, :must_pass_validation
+String.infect_an_assertion(
+  :assert_passes_validation,
+  :must_pass_validation
+)
