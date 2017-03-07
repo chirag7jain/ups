@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 require 'test_helper'
 
+# rubocop:disable Metrics/ClassLength
 class UpsBuildersAddressBuilderTest < Minitest::Test
   # US addresses
   #
@@ -79,6 +80,15 @@ class UpsBuildersAddressBuilderTest < Minitest::Test
     end
   end
 
+  def test_irish_address_xml_dump_is_as_accepted
+    subject = UPS::Builders::AddressBuilder.new irish_address_hash
+    ox_element = subject.to_xml
+    assert_equal(
+      expected_irish_address_xml_dump,
+      Ox.dump(ox_element)
+    )
+  end
+
   private
 
   def us_address_hash
@@ -128,4 +138,13 @@ class UpsBuildersAddressBuilderTest < Minitest::Test
       country: 'IE'
     }
   end
+
+  def expected_irish_address_xml_dump
+    @irish_xml_dump ||= File.open(
+      'test/xml_expectations/expected_irish_address.xml',
+      'rb',
+      &:read
+    )
+  end
 end
+# rubocop:enable Metrics/ClassLength
