@@ -9,8 +9,8 @@ module UPS
     # @since 0.1.0
     # @attr [Hash] opts The Address Parts
     class AddressBuilder < BuilderBase
-      class USAddressesMustHaveAState < ArgumentError; end
-      class AddressMustHaveALine1 < ArgumentError; end
+      class USAddressesMustHaveAState < UpsGemException; end
+      class AddressMustHaveALine1 < UpsGemException; end
 
       include Ox
 

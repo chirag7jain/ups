@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 module UPS
   module Exceptions
-    class InvalidUrlException < StandardError; end
-    class InvalidAttributeError < StandardError; end
-    class AuthenticationRequiredException < StandardError; end
+    class UpsGemException < StandardError; end
+
+    class InvalidUrlException < UpsGemException; end
+    class InvalidAttributeError < UpsGemException; end
+    class AuthenticationRequiredException < UpsGemException; end
   end
 end
