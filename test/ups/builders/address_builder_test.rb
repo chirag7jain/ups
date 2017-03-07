@@ -7,13 +7,13 @@ class UpsBuildersAddressBuilderTest < Minitest::Test
   #
 
   def test_us_address_must_have_a_state_no_key_case
-    assert_raises NoMethodError do
+    assert_raises UPS::Builders::AddressBuilder::USAddressesMustHaveAState do
       UPS::Builders::AddressBuilder.new stateless_us_address_hash
     end
   end
 
   def test_us_address_must_have_a_state_nil_value_case
-    assert_raises NoMethodError do
+    assert_raises UPS::Builders::AddressBuilder::USAddressesMustHaveAState do
       UPS::Builders::AddressBuilder.new us_address_hash_with_nil_state
     end
   end

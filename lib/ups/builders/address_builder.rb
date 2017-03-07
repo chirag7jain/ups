@@ -9,6 +9,8 @@ module UPS
     # @since 0.1.0
     # @attr [Hash] opts The Address Parts
     class AddressBuilder < BuilderBase
+      class USAddressesMustHaveAState < ArgumentError; end
+
       include Ox
 
       attr_accessor :opts
@@ -51,6 +53,7 @@ module UPS
       # @param [String] state The US State to normalize
       # @return [String]
       def normalize_us_state(state)
+        raise USAddressesMustHaveAState unless state
         if state.to_str.length > 2
           UPS::Data::US_STATES[state] || state
         else
