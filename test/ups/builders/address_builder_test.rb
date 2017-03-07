@@ -6,8 +6,25 @@ class UpsBuildersAddressBuilderTest < Minitest::Test
   # Basic behavior
   #
 
+  def test_us_address_must_have_a_state
+    assert_raises NoMethodError do
+      UPS::Builders::AddressBuilder.new stateless_us_address_hash
+    end
+  end
+
   def test_raises_without_address_line_1
     subject = UPS::Builders::AddressBuilder.new line1_less_us_address_hash
+    assert_raises NoMethodError do
+      subject.address_line_1
+    end
+  end
+
+  def test_raises_when_line1_is_nil
+    subject = UPS::Builders::AddressBuilder.new(
+      us_address_hash.merge(
+        address_line_1: nil
+      )
+    )
     assert_raises NoMethodError do
       subject.address_line_1
     end
@@ -155,6 +172,17 @@ class UpsBuildersAddressBuilderTest < Minitest::Test
   end
 
   private
+
+  def stateless_us_address_hash
+    {
+      address_line_1: 'Googleplex',
+      address_line_2: '1600 Amphitheatre Parkway',
+      city: 'Mountain View',
+      postal_code: '94043',
+      country: 'US',
+      email_address: 'nobody@example.org'
+    }
+  end
 
   def line1_less_us_address_hash
     {
