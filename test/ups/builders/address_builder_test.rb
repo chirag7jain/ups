@@ -3,6 +3,51 @@ require 'test_helper'
 
 # rubocop:disable Metrics/ClassLength
 class UpsBuildersAddressBuilderTest < Minitest::Test
+  # Basic behavior
+  #
+
+  def test_raises_without_address_line_1
+    subject = UPS::Builders::AddressBuilder.new line1_less_us_address_hash
+    assert_raises NoMethodError do
+      subject.address_line_1
+    end
+  end
+
+  def test_ok_without_address_line_2
+    subject = UPS::Builders::AddressBuilder.new line2_less_us_address_hash
+    assert_equal [''], subject.address_line_2.nodes
+    assert_equal 'AddressLine2', subject.address_line_2.value
+  end
+
+  def test_address_line_2_basic_behavior
+    subject = UPS::Builders::AddressBuilder.new us_address_hash
+    assert_equal ['1600 Amphitheatre Parkway'], subject.address_line_2.nodes
+    assert_equal 'AddressLine2', subject.address_line_2.value
+  end
+
+  def test_address_line_2_when_line2_is_really_long
+    long_string = 'abc' * 10 + '123456789'
+    subject = UPS::Builders::AddressBuilder.new(
+      us_address_hash.merge(
+        address_line_2: long_string
+      )
+    )
+    not_so_long_string = 'abc' * 10 + '12345'
+    assert_equal [not_so_long_string], subject.address_line_2.nodes
+    assert_equal 'AddressLine2', subject.address_line_2.value
+  end
+
+  def test_address_line_2_when_line2_is_nil
+    subject = UPS::Builders::AddressBuilder.new(
+      us_address_hash.merge(
+        address_line_2: nil
+      )
+    )
+    assert_raises NoMethodError do
+      subject.address_line_2
+    end
+  end
+
   # US addresses
   #
   def test_that_it_changes_the_state_to_be_the_abbreviated_state_name
@@ -100,7 +145,54 @@ class UpsBuildersAddressBuilderTest < Minitest::Test
     )
   end
 
+  #
+  # Document behavior with nil values
+  def test_address_builder_with_nil_values
+    subject = UPS::Builders::AddressBuilder.new address_with_nil_values
+    assert_raises NoMethodError do
+      subject.to_xml
+    end
+  end
+
   private
+
+  def line1_less_us_address_hash
+    {
+      address_line_2: '1600 Amphitheatre Parkway',
+      city: 'Mountain View',
+      state: 'California',
+      postal_code: '94043',
+      country: 'US',
+      email_address: 'nobody@example.org'
+    }
+  end
+
+  def line2_less_us_address_hash
+    {
+      address_line_1: 'Googleplex',
+      city: 'Mountain View',
+      state: 'California',
+      postal_code: '94043',
+      country: 'US',
+      email_address: 'nobody@example.org'
+    }
+  end
+
+  ADDRESS_WITH_NIL_VALUES = {
+    city: 'Castanet-Tolosan',
+    state: '',
+    postal_code: '31320',
+    country: 'FR',
+    phone_number: '0123456789',
+    address_line_1: '23 chemin des Prats Majous',
+    address_line_2: nil,
+    attention_name: 'Rosalia Glover',
+    company_name: 'Rosalia Glover'
+  }.freeze
+
+  def address_with_nil_values
+    ADDRESS_WITH_NIL_VALUES.dup
+  end
 
   def us_address_hash
     {
