@@ -90,7 +90,8 @@ module UPS
     end
 
     def get_response_stream(path, body)
-      response = Typhoeus.post(build_url(path), body: body)
+      headers = { 'Content-Type' => 'application/xml; charset=UTF-8' }
+      response = Typhoeus.post(build_url(path), body: body, headers: headers)
       StringIO.new(response.body)
     end
 

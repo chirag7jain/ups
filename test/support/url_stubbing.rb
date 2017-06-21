@@ -5,6 +5,9 @@ module UrlStubbing
       code: 200,
       body: File.read("#{stub_path}/#{file_name}")
     )
-    Typhoeus.stub("#{uri}#{path}").and_return(response)
+    Typhoeus.stub(
+      "#{uri}#{path}",
+      headers: { 'Content-Type' => 'application/xml; charset=UTF-8' }
+    ).and_return(response)
   end
 end
