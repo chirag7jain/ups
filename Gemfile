@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 source 'http://rubygems.org'
+
+ruby '2.4.1'
+
 gemspec
 
 group :development, :test do
@@ -9,8 +12,4 @@ group :development, :test do
   gem 'nokogiri'
   gem 'byebug'
   gem 'rubocop'
-end
-
-group :test do
-  gem 'simplecov', require: false
 end
