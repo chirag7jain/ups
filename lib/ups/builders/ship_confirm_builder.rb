@@ -55,7 +55,40 @@ module UPS
         shipment_root << element_with_value('Description', description)
       end
 
+      # Adds Email notification to Shipment/ShipmentServiceOptions/Notification
+      #
+      # @param [Array] notification_codes => strings, Max length = 3
+      # @param [Array] emails => strings, Max lenght = 2
+      #
+      # @return [void]
+      def add_email_notifications(notification_codes, emails)
+        add_shipment_service_options
+        notification_codes.each do |notif_code|
+          add_email_notification notif_code, emails
+        end
+      end
+
       private
+
+      attr_accessor :shipment_service_options_root
+
+      def add_email_notification(notif_code, emails)
+        notification = Element.new('Notification')
+        shipment_service_options_root << notification.tap do |notif_root|
+          notif_root << element_with_value('NotificationCode', notif_code)
+          notif_root << Element.new('EMailMessage').tap do |msg_root|
+            emails.each do |email|
+              msg_root << element_with_value('EMailAddress', email)
+            end
+          end
+        end
+      end
+
+      def add_shipment_service_options
+        return if shipment_service_options_root
+        @shipment_service_options_root = Element.new('ShipmentServiceOptions')
+        shipment_root << shipment_service_options_root
+      end
 
       def gif?(string)
         string.casecmp('gif').zero?
