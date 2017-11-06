@@ -67,18 +67,30 @@
     <ShipmentServiceOptions>
       <Notification>
         <NotificationCode>6</NotificationCode>
+        <Locale>
+          <Language>FRA</Language>
+          <Dialect>97</Dialect>
+        </Locale>
         <EMailMessage>
           <EMailAddress>toto@tata.com</EMailAddress>
         </EMailMessage>
       </Notification>
       <Notification>
         <NotificationCode>7</NotificationCode>
+        <Locale>
+          <Language>FRA</Language>
+          <Dialect>97</Dialect>
+        </Locale>
         <EMailMessage>
           <EMailAddress>toto@tata.com</EMailAddress>
         </EMailMessage>
       </Notification>
       <Notification>
         <NotificationCode>012</NotificationCode>
+        <Locale>
+          <Language>FRA</Language>
+          <Dialect>97</Dialect>
+        </Locale>
         <EMailMessage>
           <EMailAddress>toto@tata.com</EMailAddress>
         </EMailMessage>

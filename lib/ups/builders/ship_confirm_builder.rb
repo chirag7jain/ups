@@ -59,12 +59,13 @@ module UPS
       #
       # @param [Array] notification_codes => strings, Max length = 3
       # @param [Array] emails => strings, Max lenght = 2
+      # @param [Array] locale => [Language, Dialect]
       #
       # @return [void]
-      def add_email_notifications(notification_codes, emails)
+      def add_email_notifications(notification_codes, emails, locale)
         add_shipment_service_options
         notification_codes.each do |notif_code|
-          add_email_notification notif_code, emails
+          add_email_notification notif_code, emails, locale
         end
       end
 
@@ -72,10 +73,11 @@ module UPS
 
       attr_accessor :shipment_service_options_root
 
-      def add_email_notification(notif_code, emails)
+      def add_email_notification(notif_code, emails, locale)
         notification = Element.new('Notification')
         shipment_service_options_root << notification.tap do |notif_root|
           notif_root << element_with_value('NotificationCode', notif_code)
+          add_locale notif_root, *locale
           notif_root << Element.new('EMailMessage').tap do |msg_root|
             emails.each do |email|
               msg_root << element_with_value('EMailAddress', email)
@@ -88,6 +90,13 @@ module UPS
         return if shipment_service_options_root
         @shipment_service_options_root = Element.new('ShipmentServiceOptions')
         shipment_root << shipment_service_options_root
+      end
+
+      def add_locale(tag, language, dialect)
+        tag << Element.new('Locale').tap do |locale_root|
+          locale_root << element_with_value('Language', language)
+          locale_root << element_with_value('Dialect', dialect)
+        end
       end
 
       def gif?(string)
