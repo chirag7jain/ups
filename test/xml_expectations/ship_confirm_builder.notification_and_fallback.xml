@@ -72,6 +72,7 @@
           <Dialect>97</Dialect>
         </Locale>
         <EMailMessage>
+          <UndeliverableEMailAddr>undelivered@shipper.com</UndeliverableEMailAddr>
           <EMailAddress>toto@tata.com</EMailAddress>
         </EMailMessage>
       </Notification>
@@ -82,6 +83,7 @@
           <Dialect>97</Dialect>
         </Locale>
         <EMailMessage>
+          <UndeliverableEMailAddr>undelivered@shipper.com</UndeliverableEMailAddr>
           <EMailAddress>toto@tata.com</EMailAddress>
         </EMailMessage>
       </Notification>
@@ -92,6 +94,7 @@
           <Dialect>97</Dialect>
         </Locale>
         <EMailMessage>
+          <UndeliverableEMailAddr>undelivered@shipper.com</UndeliverableEMailAddr>
           <EMailAddress>toto@tata.com</EMailAddress>
         </EMailMessage>
       </Notification>

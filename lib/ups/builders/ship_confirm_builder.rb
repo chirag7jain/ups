@@ -57,14 +57,15 @@ module UPS
 
       # Adds Email notification to Shipment/ShipmentServiceOptions/Notification
       #
-      # @param [Array] notification_codes => strings, Max length = 3
+      # @param [Array] notif_codes => strings, Max length = 3
       # @param [Array] emails => strings, Max lenght = 2
       # @param [Array] locale => [Language, Dialect]
+      # @param [string] fallback => UndeliverableEMailAddress
       #
       # @return [void]
-      def add_email_notifications(notification_codes, emails, locale, fallback)
+      def add_email_notifications(notif_codes, emails, locale, fallback = nil)
         add_shipment_service_options
-        notification_codes.each do |notif_code|
+        notif_codes.each do |notif_code|
           add_email_notification notif_code, emails, locale, fallback
         end
       end
@@ -84,11 +85,17 @@ module UPS
 
       def append_emails_to(notif_root, emails, fallback)
         notif_root << Element.new('EMailMessage').tap do |msg_root|
-          msg_root << element_with_value('UndeliverableEMailAddr', fallback)
+          add_fallback_email_if_needed msg_root, fallback
           emails.each do |email|
             msg_root << element_with_value('EMailAddress', email)
           end
         end
+      end
+
+      def add_fallback_email_if_needed(msg_root, fallback)
+        return if fallback.nil? || fallback.empty?
+        fallback_node = element_with_value 'UndeliverableEMailAddr', fallback
+        msg_root << fallback_node
       end
 
       def add_shipment_service_options
