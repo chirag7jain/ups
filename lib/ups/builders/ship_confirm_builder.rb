@@ -62,10 +62,10 @@ module UPS
       # @param [Array] locale => [Language, Dialect]
       #
       # @return [void]
-      def add_email_notifications(notification_codes, emails, locale)
+      def add_email_notifications(notification_codes, emails, locale, fallback)
         add_shipment_service_options
         notification_codes.each do |notif_code|
-          add_email_notification notif_code, emails, locale
+          add_email_notification notif_code, emails, locale, fallback
         end
       end
 
@@ -73,15 +73,20 @@ module UPS
 
       attr_accessor :shipment_service_options_root
 
-      def add_email_notification(notif_code, emails, locale)
+      def add_email_notification(notif_code, emails, locale, fallback)
         notification = Element.new('Notification')
         shipment_service_options_root << notification.tap do |notif_root|
           notif_root << element_with_value('NotificationCode', notif_code)
           add_locale notif_root, *locale
-          notif_root << Element.new('EMailMessage').tap do |msg_root|
-            emails.each do |email|
-              msg_root << element_with_value('EMailAddress', email)
-            end
+          append_emails_to notif_root, emails, fallback
+        end
+      end
+
+      def append_emails_to(notif_root, emails, fallback)
+        notif_root << Element.new('EMailMessage').tap do |msg_root|
+          msg_root << element_with_value('UndeliverableEMailAddr', fallback)
+          emails.each do |email|
+            msg_root << element_with_value('EMailAddress', email)
           end
         end
       end
