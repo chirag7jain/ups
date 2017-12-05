@@ -19,9 +19,9 @@ class UPSBuildersTestShipConfirmBuilder < Minitest::Test
 
   def test_still_valid_with_email_notifications
     builder.add_email_notifications(
-      %w(6 7 012),
-      %w(toto@tata.com),
-      %w(FRA 97)
+      notif_codes: %w(6 7 012),
+      emails: %w(toto@tata.com),
+      locale: %w(FRA 97)
     )
     assert_passes_validation
     assert_expected_xml 'ship_confirm_builder.notification'
@@ -29,10 +29,10 @@ class UPSBuildersTestShipConfirmBuilder < Minitest::Test
 
   def test_still_valid_with_email_notifications_and_fallbacks
     builder.add_email_notifications(
-      %w(6 7 012),
-      %w(toto@tata.com),
-      %w(FRA 97),
-      'undelivered@shipper.com'
+      notif_codes: %w(6 7 012),
+      emails: %w(toto@tata.com),
+      locale: %w(FRA 97),
+      fallback: 'undelivered@shipper.com'
     )
     assert_passes_validation
     assert_expected_xml 'ship_confirm_builder.notification_and_fallback'

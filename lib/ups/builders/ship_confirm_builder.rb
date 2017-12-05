@@ -63,7 +63,7 @@ module UPS
       # @param [string] fallback => UndeliverableEMailAddress
       #
       # @return [void]
-      def add_email_notifications(notif_codes, emails, locale, fallback = nil)
+      def add_email_notifications(notif_codes:, emails:, locale:, fallback: nil)
         add_shipment_service_options
         notif_codes.each do |notif_code|
           add_email_notification notif_code, emails, locale, fallback
