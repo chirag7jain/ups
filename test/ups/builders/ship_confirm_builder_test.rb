@@ -38,6 +38,12 @@ class UPSBuildersTestShipConfirmBuilder < Minitest::Test
     assert_expected_xml 'ship_confirm_builder.notification_and_fallback'
   end
 
+  def test_can_add_references
+    builder.add_reference_numbers 'ref1', 'ref2'
+    assert_passes_validation
+    assert_expected_xml 'ship_confirm_builder.reference_numbers'
+  end
+
   private
 
   def assert_passes_validation

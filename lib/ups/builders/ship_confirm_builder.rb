@@ -70,6 +70,14 @@ module UPS
         end
       end
 
+      def add_reference_numbers(*references)
+        references.each do |reference|
+          shipment_root << Element.new('ReferenceNumber').tap do |ref_root|
+            ref_root << element_with_value('Value', reference)
+          end
+        end
+      end
+
       private
 
       attr_accessor :shipment_service_options_root
