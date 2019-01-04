@@ -2,7 +2,7 @@
 
 require 'test_helper'
 
-class UPSBuildersTestRateBuilder < Minitest::Test
+class UPSBuildersTestTrackingBuilder < Minitest::Test
   include SchemaPath
   include ShippingOptions
 
