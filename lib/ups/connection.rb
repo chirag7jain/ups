@@ -22,7 +22,7 @@ module UPS
     SHIP_CONFIRM_PATH = '/ups.app/xml/ShipConfirm'
     SHIP_ACCEPT_PATH = '/ups.app/xml/ShipAccept'
     ADDRESS_PATH = '/ups.app/xml/XAV'
-    TRACKING_PATH = 'ups.app/xml/Track'
+    TRACKING_PATH = '/ups.app/xml/Track'
 
     DEFAULT_PARAMS = {
       test_mode: false
