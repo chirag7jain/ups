@@ -9,12 +9,17 @@ class RatesNegotatiedTest < Minitest::Test
     Typhoeus::Expectation.clear
   end
 
+  def test_track_with_success
+    stub_tracking_url 'track_success.xml'
+    assert track.success?
+  end
+
   def test_returns_a_package_with_activities
     stub_tracking_url 'track_success.xml'
     assert_equal 'ATrackingNumber', track.tracking_number
-    assert_equal({ code: 'D', description: 'DELIVERED' }, track.status_type)
-    assert_equal 'KB', track.status_code
-    assert_equal expected_datetime, track.status_datetime
+    assert_equal expected_status_type, track.tracking_status_type
+    assert_equal 'KB', track.tracking_status_code
+    assert_equal expected_datetime, track.tracking_status_datetime
   end
 
   private
@@ -50,5 +55,9 @@ class RatesNegotatiedTest < Minitest::Test
 
   def expected_datetime
     DateTime.parse('2003-03-13T16:00:00+00:00', false)
+  end
+
+  def expected_status_type
+    { code: 'D', description: 'DELIVERED' }
   end
 end
