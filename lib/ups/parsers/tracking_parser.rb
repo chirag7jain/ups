@@ -66,7 +66,7 @@ module UPS
       end
 
       def package_element
-        %i[Shipment Package].freeze
+        %i(Shipment Package).freeze
       end
 
       def status_element
