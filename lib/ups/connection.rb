@@ -22,6 +22,7 @@ module UPS
     SHIP_CONFIRM_PATH = '/ups.app/xml/ShipConfirm'
     SHIP_ACCEPT_PATH = '/ups.app/xml/ShipAccept'
     ADDRESS_PATH = '/ups.app/xml/XAV'
+    TRACKING_PATH = '/ups.app/xml/Track'
 
     DEFAULT_PARAMS = {
       test_mode: false
@@ -81,6 +82,28 @@ module UPS
       accept_builder = build_accept_request_from_confirm(confirm_builder,
                                                          confirm_response)
       make_accept_request accept_builder
+    end
+
+    # Makes a request to track a package, freight, mail innovation
+    #
+    # A pre-configured {Builders::TrackingBuilder} object can be passed as
+    # the first option or a block yielded to configure a new
+    # {Builders::TrackingBuilder} object.
+    #
+    # @param [Builders::TrackingBuilder] tracking_builder A pre-configured
+    #   {Builders::TrackingBuilder} object to use
+    # @yield [tracking_builder] A TrackingBuilder object for configuring
+    #   the tracking information sent
+    def track(tracking_builder = nil)
+      if tracking_builder.nil? && block_given?
+        tracking_builder = UPS::Builders::TrackingBuilder.new
+        yield tracking_builder
+      end
+
+      response = get_response_stream TRACKING_PATH, tracking_builder.to_xml
+      UPS::Parsers::TrackingParser.new.tap do |parser|
+        Ox.sax_parse(parser, response)
+      end
     end
 
     private

@@ -1,6 +1,9 @@
 # frozen_string_literal: true
+
 require 'simplecov'
-SimpleCov.start
+SimpleCov.start do
+  add_filter '/test/'
+end
 
 # require 'codeclimate-test-reporter'
 # CodeClimate::TestReporter.start
