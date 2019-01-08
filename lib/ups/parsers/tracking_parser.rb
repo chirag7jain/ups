@@ -3,11 +3,14 @@
 module UPS
   module Parsers
     class TrackingParser < ParserBase
-      attr_reader :tracking_number, :status_type, :status_code, :status_datetime
+      attr_reader :tracking_number,
+                  :tracking_status_type,
+                  :tracking_status_code,
+                  :tracking_status_datetime
 
       def initialize
         super
-        @status_type = {}
+        @tracking_status_type = {}
       end
 
       def end_element(name)
@@ -38,19 +41,19 @@ module UPS
       def parse_code_of_status_type(value)
         return unless switch_active?(*status_element, :StatusType, :Code)
 
-        @status_type[:code] = value.as_s
+        @tracking_status_type[:code] = value.as_s
       end
 
       def parse_description_of_status_type(value)
         return unless switch_active?(*status_element, :StatusType, :Description)
 
-        @status_type[:description] = value.as_s
+        @tracking_status_type[:description] = value.as_s
       end
 
       def parse_status_code(value)
         return unless switch_active?(*status_element, :StatusCode, :Code)
 
-        @status_code = value.as_s
+        @tracking_status_code = value.as_s
       end
 
       def parse_status_date(value)
@@ -75,7 +78,8 @@ module UPS
 
       def generate_status_datetime
         date_time = "#{status_date} #{status_time}"
-        @status_datetime = DateTime.strptime date_time, "%Y%m%d #{time_format}"
+        datetime_format = "%Y%m%d #{time_format}"
+        @tracking_status_datetime = DateTime.strptime date_time, datetime_format
       end
 
       def time_format
