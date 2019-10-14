@@ -9,7 +9,7 @@ module UPS
     # @since 0.1.0
     # @attr [String] name The Containing XML Element Name
     # @attr [Hash] opts The Organization and Address Parts
-    class ShipConfirmBuilder < BuilderBase
+    class ShipConfirmBuilder < BuilderBase # rubocop:disable Metrics/ClassLength
       include Ox
 
       # Initializes a new {ShipConfirmBuilder} object
@@ -78,9 +78,26 @@ module UPS
         end
       end
 
+      ACCESS_POINT_DELIVERY_CODE = '01'
+      def add_access_point(relay_address)
+        return unless relay_address
+        add_shipment_indication_type
+        shipment_indication_type_root << element_with_value(
+          'Code',
+          ACCESS_POINT_DELIVERY_CODE
+        )
+        shipment_root << OrganisationBuilder.new(
+          'AlternateDeliveryAddress',
+          relay_address
+        ).to_xml
+      end
+
       private
 
-      attr_accessor :shipment_service_options_root
+      attr_accessor(
+        :shipment_service_options_root,
+        :shipment_indication_type_root
+      )
 
       def add_email_notification(notif_code, emails, locale, fallback)
         notification = Element.new('Notification')
@@ -110,6 +127,12 @@ module UPS
         return if shipment_service_options_root
         @shipment_service_options_root = Element.new('ShipmentServiceOptions')
         shipment_root << shipment_service_options_root
+      end
+
+      def add_shipment_indication_type
+        return if shipment_indication_type_root
+        @shipment_indication_type_root = Element.new('ShipmentIndicationType')
+        shipment_root << shipment_indication_type_root
       end
 
       def add_locale(tag, language, dialect)

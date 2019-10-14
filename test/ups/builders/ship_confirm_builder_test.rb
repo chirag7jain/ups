@@ -44,6 +44,13 @@ class UPSBuildersTestShipConfirmBuilder < Minitest::Test
     assert_expected_xml 'ship_confirm_builder.reference_numbers'
   end
 
+  def test_can_add_access_point
+    relay_address = ship_to.merge ups_access_point_id: 'U12456789'
+    builder.add_access_point relay_address
+    assert_passes_validation
+    assert_expected_xml 'ship_confirm_builder.access_point'
+  end
+
   private
 
   def assert_passes_validation

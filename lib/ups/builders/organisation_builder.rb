@@ -33,7 +33,15 @@ module UPS
       #
       # @return [Ox::Element] XML representation of company_name
       def company_name
-        element_with_value('CompanyName', opts[:company_name][0..34])
+        company_name_element 'CompanyName'
+      end
+
+      def retail_name
+        company_name_element('Name')
+      end
+
+      def company_name_element(element_name)
+        element_with_value(element_name, opts[:company_name][0..34])
       end
 
       # Returns an XML representation of phone_number
@@ -51,6 +59,18 @@ module UPS
         element_with_value('AttentionName', opts[:attention_name][0..34])
       end
 
+      # Returns an XML representation of UPSAccessPointID for which we use
+      # ups_access_point_id
+      #
+      # @return [Ox::Element] XML representation of UPSAccessPointID part
+      def ups_access_point_id
+        element_with_value('UPSAccessPointID', raw_ups_access_point_id)
+      end
+
+      def raw_ups_access_point_id
+        opts[:ups_access_point_id]
+      end
+
       # Returns an XML representation of address
       #
       # @return [Ox::Element] An instance of {AddressBuilder} containing the
@@ -64,11 +84,24 @@ module UPS
       # @return [Ox::Element] XML representation of the current object
       def to_xml
         Element.new(name).tap do |org|
-          org << company_name
-          org << phone_number
+          if raw_ups_access_point_id
+            process_access_point org
+          else
+            process_regular_org org
+          end
           org << attention_name
           org << address
         end
+      end
+
+      def process_access_point(org)
+        org << ups_access_point_id
+        org << retail_name
+      end
+
+      def process_regular_org(org)
+        org << company_name
+        org << phone_number
       end
     end
   end
