@@ -17,6 +17,11 @@ class UPSBuildersTestShipConfirmBuilder < Minitest::Test
     assert_expected_xml 'ship_confirm_builder.base'
   end
 
+  def test_still_valid_with_master_carton_id
+    builder.add_master_carton_id 'MyCarton123'
+    assert_expected_xml 'master_carton_id'
+  end
+
   def test_still_valid_with_email_notifications
     builder.add_email_notifications(
       notif_codes: %w(6 7 012),

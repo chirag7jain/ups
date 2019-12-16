@@ -55,6 +55,14 @@ module UPS
         shipment_root << element_with_value('Description', description)
       end
 
+      # Add MasterCartonID
+      #
+      # @param [String] MasterCartonID for WorldWideEconomy
+      # @return [void]
+      def add_master_carton_id(master_carton_id)
+        shipment_root << element_with_value('MasterCartonID', master_carton_id)
+      end
+
       # Adds Email notification to Shipment/ShipmentServiceOptions/Notification
       #
       # @param [Array] notif_codes => strings, Max length = 3

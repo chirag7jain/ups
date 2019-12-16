@@ -1,0 +1,88 @@
+
+<AccessRequest>
+  <AccessLicenseNumber></AccessLicenseNumber>
+  <UserId></UserId>
+  <Password></Password>
+</AccessRequest>
+<ShipmentConfirmRequest>
+  <Shipment>
+    <Shipper>
+      <Name>White Residence</Name>
+      <AttentionName>Walter White</AttentionName>
+      <CompanyName>White Residence</CompanyName>
+      <PhoneNumber>01792 123456</PhoneNumber>
+      <ShipperNumber></ShipperNumber>
+      <Address>
+        <AddressLine1>308 Negra Arroyo Lane</AddressLine1>
+        <AddressLine2></AddressLine2>
+        <EmailAddress>nobody@example.com</EmailAddress>
+        <City>Albuquerque</City>
+        <StateProvinceCode>NM</StateProvinceCode>
+        <PostalCode>87104</PostalCode>
+        <CountryCode>US</CountryCode>
+      </Address>
+    </Shipper>
+    <ShipTo>
+      <CompanyName>Google Inc.</CompanyName>
+      <PhoneNumber>0207 031 3000</PhoneNumber>
+      <AttentionName>Sergie Bryn</AttentionName>
+      <Address>
+        <AddressLine1>1 St Giles High Street</AddressLine1>
+        <AddressLine2></AddressLine2>
+        <EmailAddress>nobody@example.com</EmailAddress>
+        <City>London</City>
+        <StateProvinceCode></StateProvinceCode>
+        <PostalCode>WC2H 8AG</PostalCode>
+        <CountryCode>GB</CountryCode>
+      </Address>
+    </ShipTo>
+    <ShipFrom>
+      <CompanyName>White Residence</CompanyName>
+      <PhoneNumber>01792 123456</PhoneNumber>
+      <AttentionName>Walter White</AttentionName>
+      <Address>
+        <AddressLine1>308 Negra Arroyo Lane</AddressLine1>
+        <AddressLine2></AddressLine2>
+        <EmailAddress>nobody@example.com</EmailAddress>
+        <City>Albuquerque</City>
+        <StateProvinceCode>NM</StateProvinceCode>
+        <PostalCode>87104</PostalCode>
+        <CountryCode>US</CountryCode>
+      </Address>
+    </ShipFrom>
+    <Package>
+      <PackagingType>
+        <Code>02</Code>
+        <Description>Customer Supplied</Description>
+      </PackagingType>
+      <Description>Rate</Description>
+      <PackageWeight>
+        <UnitOfMeasurement>
+          <Code>KGS</Code>
+        </UnitOfMeasurement>
+        <Weight>0.5</Weight>
+      </PackageWeight>
+    </Package>
+    <Description>Los Pollo Hermanos</Description>
+    <MasterCartonID>MyCarton123</MasterCartonID>
+  </Shipment>
+  <LabelSpecification>
+    <LabelPrintMethod>
+      <Code>gif</Code>
+      <Description>gif file</Description>
+    </LabelPrintMethod>
+    <LabelImageFormat>
+      <Code>gif</Code>
+      <Description>gif</Description>
+    </LabelImageFormat>
+    <LabelStockSize>
+      <Height>100</Height>
+      <Width>100</Width>
+    </LabelStockSize>
+    <HTTPUserAgent>RubyUPS/0.8.2</HTTPUserAgent>
+  </LabelSpecification>
+  <Request>
+    <RequestAction>ShipConfirm</RequestAction>
+    <RequestOption>validate</RequestOption>
+  </Request>
+</ShipmentConfirmRequest>
