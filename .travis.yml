@@ -6,6 +6,8 @@ rvm:
   - 2.3.0
   - ruby-head
 cache: bundler
+before_install:
+  - gem install -v 2.0.2 bundler --no-rdoc --no-ri
 matrix:
   allow_failures:
     - rvm: ruby-head
