@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module UPS
   module Version
     MAJOR = 0

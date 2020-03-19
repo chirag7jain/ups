@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module UPS
   module Exceptions
     class UpsGemException < StandardError; end

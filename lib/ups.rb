@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module UPS
   autoload :SERVICES,              'ups/services'
   autoload :PACKAGING,             'ups/packaging'

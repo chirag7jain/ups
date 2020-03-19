@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module UPS
   SERVICES = {
     '01' => 'Next Day Air',

@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module UrlStubbing
   def add_url_stub(uri, path, file_name)
     response = Typhoeus::Response.new(
