@@ -24,6 +24,7 @@ module UPS
     SHIP_ACCEPT_PATH = '/ups.app/xml/ShipAccept'
     ADDRESS_PATH = '/ups.app/xml/XAV'
     TRACKING_PATH = '/ups.app/xml/Track'
+    LOCATOR_PATH = '/ups.app/xml/Locator'
 
     DEFAULT_PARAMS = {
       test_mode: false
@@ -103,6 +104,28 @@ module UPS
 
       response = get_response_stream TRACKING_PATH, tracking_builder.to_xml
       UPS::Parsers::TrackingParser.new.tap do |parser|
+        Ox.sax_parse(parser, response)
+      end
+    end
+
+    # Makes a request to get the UPS relay point address
+    #
+    # A pre-configured {Builders::LocatorBuilder} object can be passed as
+    # the first option or a block yielded to configure a new
+    # {Builders::LocatorBuilder} object.
+    #
+    # @param [Builders::LocatorBuilder] locator_builder A pre-configured
+    #   {Builders::LocatorBuilder} object to use
+    # @yield [locator_builder] A LocatorBuilder object for configuring
+    #   the locator information sent
+    def locator(locator_builder = nil)
+      if locator_builder.nil? && block_given?
+        locator_builder = Builders::LocatorBuilder.new
+        yield locator_builder
+      end
+
+      response = get_response_stream LOCATOR_PATH, locator_builder.to_xml
+      UPS::Parsers::LocatorParser.new.tap do |parser|
         Ox.sax_parse(parser, response)
       end
     end
