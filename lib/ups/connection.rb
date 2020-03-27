@@ -120,7 +120,7 @@ module UPS
     #   the locator information sent
     def locator(locator_builder = nil)
       if locator_builder.nil? && block_given?
-        locator_builder = Builders::LocatorBuilder.new
+        locator_builder = Builders::LocatorBuilder.new url == TEST_URL
         yield locator_builder
       end
 

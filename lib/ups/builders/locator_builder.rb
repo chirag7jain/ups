@@ -4,16 +4,17 @@ require 'ox'
 
 module UPS
   module Builders
-    # The {TrackingBuilder} class builds UPS XML Track Objects.
+    # The {LocatorBuilder} class builds UPS XML Locator Objects.
     #
     class LocatorBuilder < BuilderBase
       include Ox
 
-      # Initializes a new {TrackingBuilder} object
+      # Initializes a new {LocatorBuilder} object
       #
-      def initialize
+      def initialize(test_mode)
         super 'LocatorRequest', true
 
+        @test_mode = test_mode
         add_request('Locator', '64')
       end
 
@@ -23,14 +24,14 @@ module UPS
             access_point << element_with_value('PublicAccessPointID', point_id)
           end
         end
-        # root << element_with_value('LocationID', location_number)
       end
 
-      def add_origin_country(country = 'US', city = 'Atlanta')
+      def add_origin_country(country)
         root << Element.new('OriginAddress').tap do |origin_address|
           origin_address << Element.new('AddressKeyFormat').tap do |address_key|
-            address_key << element_with_value('CountryCode', country)
-            address_key << element_with_value('PoliticalDivision2', city)
+            address_key << element_with_value('CountryCode', country) unless @test_mode
+            address_key << element_with_value('CountryCode', 'US') if @test_mode
+            address_key << element_with_value('PoliticalDivision2', 'Atlanta') if @test_mode
           end
         end
       end

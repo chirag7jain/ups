@@ -8,7 +8,7 @@ class UPSBuildersTestLocatorBuilder < Minitest::Test
   include ShippingOptions
 
   def setup
-    @rate_builder = UPS::Builders::LocatorBuilder.new do |builder|
+    @rate_builder = UPS::Builders::LocatorBuilder.new true do |builder|
       setup_builder(builder)
     end
   end
@@ -30,6 +30,6 @@ class UPSBuildersTestLocatorBuilder < Minitest::Test
     )
     builder.add_location_number 'U76511081'
     builder.add_translation 'FRA'
-    builder.add_origin_country
+    builder.add_origin_country 'US'
   end
 end

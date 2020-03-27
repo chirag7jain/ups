@@ -32,7 +32,7 @@ class UpsConnectionLocatorTest < Minitest::Test
     stub_locator_url 'locator_failure.xml'
     subject = server.locator do |locator_builder|
       setup_locator_builder(locator_builder)
-      locator_builder.add_origin_country
+      locator_builder.add_origin_country 'US'
     end
     refute_equal false, subject
     assert_equal false, subject.success?
