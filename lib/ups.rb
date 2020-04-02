@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module UPS
   autoload :SERVICES,              'ups/services'
   autoload :PACKAGING,             'ups/packaging'
@@ -21,6 +22,7 @@ module UPS
     autoload :ShipConfirmParser,   'ups/parsers/ship_confirm_parser'
     autoload :ShipAcceptParser,    'ups/parsers/ship_accept_parser'
     autoload :TrackingParser,      'ups/parsers/tracking_parser'
+    autoload :LocatorParser,       'ups/parsers/locator_parser'
   end
 
   module Builders
@@ -32,5 +34,6 @@ module UPS
     autoload :OrganisationBuilder, 'ups/builders/organisation_builder'
     autoload :ShipperBuilder,      'ups/builders/shipper_builder'
     autoload :TrackingBuilder,     'ups/builders/tracking_builder'
+    autoload :LocatorBuilder,      'ups/builders/locator_builder'
   end
 end

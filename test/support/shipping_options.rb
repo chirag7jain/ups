@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module ShippingOptions
   SHIPPING_OPTIONS_SHIPPER_BLUEPRINT = {
     company_name: 'White Residence',

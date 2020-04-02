@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module UPS
   PACKAGING = {
     '01' => 'UPS Letter',

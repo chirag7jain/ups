@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'ox'
 
 module UPS
@@ -30,11 +31,14 @@ module UPS
       # Initializes a new {BuilderBase} object
       #
       # @param [String] root_name The Name of the XML Root
+      # @param [Boolean] instruction_before_root adding instruction before root
+      # element for locator use (default false)
       # @return [void]
-      def initialize(root_name)
+      def initialize(root_name, instruction_before_root = false)
         initialize_xml_roots root_name
 
         document << access_request
+        document << instruction if instruction_before_root
         document << root
 
         yield self if block_given?
@@ -160,6 +164,15 @@ module UPS
       end
 
       private
+
+      # Get the instruction object to add before a XML object
+      #
+      # @return []Ox::Instruction]
+      def instruction
+        instruct = Instruct.new('xml')
+        instruct[:version] = '1.0'
+        instruct
+      end
 
       def initialize_xml_roots(root_name)
         self.document = Document.new

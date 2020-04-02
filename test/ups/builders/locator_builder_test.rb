@@ -1,20 +1,21 @@
+
 # frozen_string_literal: true
 
 require 'test_helper'
 
-class UPSBuildersTestRateBuilder < Minitest::Test
+class UPSBuildersTestLocatorBuilder < Minitest::Test
   include SchemaPath
   include ShippingOptions
 
   def setup
-    @rate_builder = UPS::Builders::RateBuilder.new do |builder|
+    @rate_builder = UPS::Builders::LocatorBuilder.new true do |builder|
       setup_builder(builder)
     end
   end
 
   def test_validates_against_xsd
     assert_passes_validation(
-      schema_path('RateRequest.xsd'),
+      schema_path('LocatorRequest.xsd'),
       @rate_builder.to_xml
     )
   end
@@ -27,9 +28,8 @@ class UPSBuildersTestRateBuilder < Minitest::Test
       ENV['UPS_USER_ID'],
       ENV['UPS_PASSWORD']
     )
-    builder.add_shipper shipper
-    builder.add_ship_to ship_to
-    builder.add_ship_from shipper
-    builder.add_package package
+    builder.add_location_number 'U76511081'
+    builder.add_translation 'FRA'
+    builder.add_origin_country 'US'
   end
 end

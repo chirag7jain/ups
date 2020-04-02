@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LocatorResponse>
+    <Response>
+        <TransactionReference/>
+        <ResponseStatusCode>0</ResponseStatusCode>
+        <ResponseStatusDescription>Failure</ResponseStatusDescription>
+        <Error>
+            <ErrorSeverity>Hard</ErrorSeverity>
+            <ErrorCode>350102</ErrorCode>
+            <ErrorDescription>The Country code is missing.</ErrorDescription>
+        </Error>
+    </Response>
+</LocatorResponse>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LocatorResponse>
+    <Response>
+        <TransactionReference/>
+        <ResponseStatusCode>1</ResponseStatusCode>
+        <ResponseStatusDescription>Success</ResponseStatusDescription>
+    </Response>
+    <SearchResults>
+        <DropLocation>
+            <LocationID>158596</LocationID>
+            <IVR>
+                <PhraseID>0</PhraseID>
+            </IVR>
+            <Geocode>
+                <Latitude>49.20637130</Latitude>
+                <Longitude>-0.43180999</Longitude>
+            </Geocode>
+            <AddressKeyFormat>
+                <ConsigneeName>L'ALTHA </ConsigneeName>
+                <AddressLine>1 PLACE DES 37 CANADIENS</AddressLine>
+                <PoliticalDivision2>AUTHIE</PoliticalDivision2>
+                <PostcodePrimaryLow>14280</PostcodePrimaryLow>
+                <CountryCode>FR</CountryCode>
+            </AddressKeyFormat>
+            <LocationAttribute>
+                <OptionType>
+                    <Code>01</Code>
+                    <Description>Location</Description>
+                </OptionType>
+                <OptionCode>
+                    <Code>018</Code>
+                    <Description>UPS Access Point&amp;trade;</Description>
+                </OptionCode>
+            </LocationAttribute>
+            <Distance>
+                <Value>0</Value>
+                <UnitOfMeasurement/>
+            </Distance>
+            <SpecialInstructions>
+                <Segment>DANS LE BOURG DE LA COMMUNE - FACE BOULANGERIE</Segment>
+            </SpecialInstructions>
+            <AdditionalChargeIndicator/>
+            <StandardHoursOfOperation>Mon-Fri: 7:00am-8:00pm; Sat: 7:30am-7:00pm; Sun: Closed</StandardHoursOfOperation>
+            <OperatingHours>
+                <StandardHours>
+                    <HoursType>10</HoursType>
+                    <DayOfWeek>
+                        <Day>1</Day>
+                        <ClosedIndicator/>
+                    </DayOfWeek>
+                    <DayOfWeek>
+                        <Day>2</Day>
+                        <OpenHours>700</OpenHours>
+                        <CloseHours>2000</CloseHours>
+                    </DayOfWeek>
+                    <DayOfWeek>
+                        <Day>3</Day>
+                        <OpenHours>700</OpenHours>
+                        <CloseHours>2000</CloseHours>
+                    </DayOfWeek>
+                    <DayOfWeek>
+                        <Day>4</Day>
+                        <OpenHours>700</OpenHours>
+                        <CloseHours>2000</CloseHours>
+                    </DayOfWeek>
+                    <DayOfWeek>
+                        <Day>5</Day>
+                        <OpenHours>700</OpenHours>
+                        <CloseHours>2000</CloseHours>
+                    </DayOfWeek>
+                    <DayOfWeek>
+                        <Day>6</Day>
+                        <OpenHours>700</OpenHours>
+                        <CloseHours>2000</CloseHours>
+                    </DayOfWeek>
+                    <DayOfWeek>
+                        <Day>7</Day>
+                        <OpenHours>730</OpenHours>
+                        <CloseHours>1900</CloseHours>
+                    </DayOfWeek>
+                </StandardHours>
+            </OperatingHours>
+            <Comments>DANS LE BOURG DE LA COMMUNE - FACE BOULANGERIE</Comments>
+            <AdditionalComments>
+                <CommentType>
+                    <Code>01</Code>
+                    <Text>Note: UPS Access Point&amp;#8482; Economy packages will be picked up the next business day.</Text>
+                </CommentType>
+            </AdditionalComments>
+            <SLIC>1407</SLIC>
+            <ServiceOfferingList>
+                <ServiceOffering>
+                    <Code>001</Code>
+                    <Description>Direct To Retail</Description>
+                </ServiceOffering>
+                <ServiceOffering>
+                    <Code>002</Code>
+                    <Description>Not In One ADL</Description>
+                </ServiceOffering>
+                <ServiceOffering>
+                    <Code>004</Code>
+                    <Description>Retail to Retail</Description>
+                </ServiceOffering>
+                <ServiceOffering>
+                    <Code>007</Code>
+                    <Description>PUDO</Description>
+                </ServiceOffering>
+                <ServiceOffering>
+                    <Code>010</Code>
+                    <Description>DCO DCR intercept accepted</Description>
+                </ServiceOffering>
+                <ServiceOffering>
+                    <Code>015</Code>
+                    <Description>Accepts Mobile Barcodes</Description>
+                </ServiceOffering>
+            </ServiceOfferingList>
+            <DisplayPhoneNumberIndicator>0</DisplayPhoneNumberIndicator>
+            <AccessPointInformation>
+                <PublicAccessPointID>U76511081</PublicAccessPointID>
+                <ImageURL>https://www.ups.com/rms/image?id=4AA3531B-29A7-4F0A-9716-CA0A2666E9E2</ImageURL>
+                <BusinessClassificationList>
+                    <BusinessClassification>
+                        <Code>017</Code>
+                        <Description>HOTEL_RESTAURANT</Description>
+                    </BusinessClassification>
+                </BusinessClassificationList>
+                <AccessPointStatus>
+                    <Code>01</Code>
+                    <Description>ACTIVE</Description>
+                </AccessPointStatus>
+            </AccessPointInformation>
+            <LocationNewIndicator>N</LocationNewIndicator>
+            <WillCallLocationIndicator>N</WillCallLocationIndicator>
+        </DropLocation>
+    </SearchResults>
+</LocatorResponse>
