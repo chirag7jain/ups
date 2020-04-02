@@ -29,9 +29,7 @@ module UPS
       def add_origin_country(country)
         root << Element.new('OriginAddress').tap do |origin_address|
           origin_address << Element.new('AddressKeyFormat').tap do |address_key|
-            address_key << element_with_value('CountryCode', country) unless @test_mode
-            address_key << element_with_value('CountryCode', 'US') if @test_mode
-            address_key << element_with_value('PoliticalDivision2', 'Atlanta') if @test_mode
+            add_address_elements address_key, country
           end
         end
       end
@@ -43,6 +41,20 @@ module UPS
       end
 
       private
+
+      def add_address_elements(address_key, country)
+        return add_test_address_elements address_key if @test_mode
+        add_prod_address_elements address_key, country
+      end
+
+      def add_prod_address_elements(address_key, country)
+        address_key << element_with_value('CountryCode', country)
+      end
+
+      def add_test_address_elements(address_key)
+        address_key << element_with_value('CountryCode', 'US')
+        address_key << element_with_value('PoliticalDivision2', 'Atlanta')
+      end
 
       def initialize_xml_roots(root_name)
         self.document = Document.new
