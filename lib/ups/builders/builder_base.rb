@@ -137,11 +137,26 @@ module UPS
       # @param [String] ship_number The UPS Shipper Number
       # @return [void]
       def add_payment_information(ship_number)
-        shipment_root << Element.new('PaymentInformation').tap do |payment|
+        retrieve_or_create_node('PaymentInformation').tap do |payment|
           payment << Element.new('Prepaid').tap do |prepaid|
             prepaid << Element.new('BillShipper').tap do |bill_shipper|
               bill_shipper << element_with_value('AccountNumber', ship_number)
             end
+          end
+        end
+      end
+
+      # Adds a BillThirdParty section to the XML document being built
+      #
+      # @param [String] account_number UPS Third Party Shipper Account Number
+      # @param [String] zip The UPS Third Party Shipper Zip
+      # @param [String] country The UPS Third Party Shipper Country
+      # @return [void]
+      def add_bill_third_party(account_number, zip, country)
+        retrieve_or_create_node('PaymentInformation').tap do |payment|
+          payment << Element.new('BillThirdParty').tap do |third_party|
+            third_party << element_with_value('AccountNumber', account_number)
+            third_party << bill_third_party_shipper(zip, country)
           end
         end
       end
@@ -164,6 +179,15 @@ module UPS
       end
 
       private
+
+      def bill_third_party_shipper(zip, country)
+        Element.new('BillThirdPartyShipper').tap do |shipper|
+          shipper << Element.new('Address').tap do |address|
+            address << element_with_value('PostalCode', zip)
+            address << element_with_value('CountryCode', country)
+          end
+        end
+      end
 
       # Get the instruction object to add before a XML object
       #
@@ -208,6 +232,14 @@ module UPS
 
       def code_description(name, code, description)
         multi_valued(name, Code: code, Description: description)
+      end
+
+      def retrieve_or_create_node(name, parent: shipment_root)
+        node = parent.nodes.find { |elem| elem.value == name }
+        return node if node
+        new_element = Element.new(name)
+        parent << new_element
+        new_element
       end
 
       def multi_valued(name, params)

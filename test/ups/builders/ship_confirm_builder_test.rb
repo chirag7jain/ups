@@ -23,6 +23,11 @@ class UPSBuildersTestShipConfirmBuilder < Minitest::Test
     assert_expected_xml 'master_carton_id'
   end
 
+  def test_still_valid_with_bill_third_party
+    builder.add_bill_third_party '199719', '31200', 'FR'
+    assert_expected_xml 'bill_third_party'
+  end
+
   def test_still_valid_with_email_notifications
     builder.add_email_notifications(
       notif_codes: %w(6 7 012),
